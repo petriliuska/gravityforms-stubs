@@ -5,4 +5,4 @@ Stubs are generated using [php-stubs/generator](https://github.com/php-stubs/gen
 
 ## Installation
 
-`composer require --dev petriliuska/gravity-forms-stubs`
+`composer require --dev petriliuska/gravityforms-stubs`
