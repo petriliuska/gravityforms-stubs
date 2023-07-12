@@ -1,0 +1,16 @@
+{
+  "name": "petriliuska/gravity-forms-stubs",
+  "description": "Stubs for Gravity Forms plugin",
+  "authors": [
+    {
+      "name": "Petri Liuska",
+      "email": "petriliuska@pm.me",
+      "role": "Developer"
+    }
+  ],
+  "license": "MIT",
+  "type": "library",
+  "require-dev": {
+    "php-stubs/generator": "^0.8.3"
+  }
+}
