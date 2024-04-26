@@ -98,6 +98,18 @@ namespace {
         public static function is_json($string)
         {
         }
+        /**
+         * Strips HTML tags using wp_strip_all_tags from a string that may contain unicode.
+         *
+         * @since 2.8.5
+         *
+         * @param string $string JSON string.
+         *
+         * @return string
+         */
+        public static function strip_all_tags_from_json_string($string)
+        {
+        }
         //Returns the url of the plugin's root folder
         public static function get_base_url()
         {
@@ -338,6 +350,21 @@ namespace {
         {
         }
         public static function send_notification($notification, $form, $lead, $data = array())
+        {
+        }
+        /**
+         * Strip extra commas from email headers.
+         *
+         * If an email field has multiple merge tags, and not all of the fields are
+         * filled out, we can end up with extra commas that break the header.
+         *
+         * @since 2.8.6
+         *
+         * @param $email
+         *
+         * @return string
+         */
+        public static function remove_extra_commas($email)
         {
         }
         public static function send_notifications($notification_ids, $form, $lead, $do_conditional_logic = \true, $event = 'form_submission', $data = array())
@@ -2801,6 +2828,19 @@ namespace {
         {
         }
         /**
+         * Fire the post render events for a form instance when the form is visible on the page.
+         *
+         * @since 2.8.4
+         *
+         * @param $form_id
+         * @param $current_page
+         *
+         * @return string
+         */
+        public static function post_render_script($form_id, $current_page = 'current_page')
+        {
+        }
+        /**
          * Get a form for display.
          *
          * @since unknown
@@ -3471,6 +3511,19 @@ namespace {
          * @return array|false|string
          */
         public static function get_form_styles($style_settings)
+        {
+        }
+        /**
+         * Get the spacer to add to the end of the row, if needed
+         *
+         * @since 2.8.2
+         *
+         * @param array $form The current form object.
+         * @param array $field The current field object.
+         *
+         * @return string
+         */
+        public static function get_row_spacer($field, $form)
         {
         }
     }
@@ -6090,7 +6143,7 @@ namespace {
          *
          * @var string $version The version number.
          */
-        public static $version = '2.8.0';
+        public static $version = '2.8.8';
         /**
          * Handles background upgrade tasks.
          *
@@ -11522,6 +11575,18 @@ namespace {
         public function save_feed_order($feed_order)
         {
         }
+        /* Process feeds when an entry is marked as "not spam"
+         *
+         * @since  2.8.1
+         * @access public
+         *
+         * @param int $entry_id The ID of the entry being processed.
+         * @param string $status The status of the entry being processed.
+         * @param string $prev_status The previous status of the entry being processed.
+         */
+        public function process_feed_when_unspammed($entry_id, $status, $prev_status)
+        {
+        }
         //---------- Form Settings Pages --------------------------
         public function form_settings_init()
         {
@@ -14418,6 +14483,7 @@ namespace {
          * Validates the submitted value of the specified field.
          *
          * @since 2.7
+         * @since 2.8.7 Added the gform_pre_validation filter.
          *
          * @param int   $form_id      The ID of the form this submission belongs to.
          * @param int   $field_id     The ID of the field to be validated.
@@ -25394,6 +25460,29 @@ namespace {
         public function get_value_merge_tag($value, $input_id, $entry, $form, $modifier, $raw_value, $url_encode, $esc_html, $format, $nl2br)
         {
         }
+        /**
+         * Validates the field value.
+         *
+         * @since 2.8.2
+         *
+         * @param string $value The submitted value.
+         * @param array  $form  The form currently being validated.
+         *
+         * @return void
+         */
+        public function validate($value, $form)
+        {
+        }
+        /**
+         * Sanitizes the field properties.
+         *
+         * @since 2.8.2
+         *
+         * @return void
+         */
+        public function sanitize_settings()
+        {
+        }
     }
     class GF_Field_Website extends \GF_Field
     {
@@ -27617,15 +27706,17 @@ namespace {
         {
         }
         /**
-         * Get log file size for plugin
+         * Get log file size by plugin slug or file path.
          *
          * @since 1.2.1
-         * @access public
-         * @param  string $plugin_name Plugin slug.
+         * @since 2.8.3 Updated params.
+         *
+         * @param string $plugin_name_or_path The plugin slug or log file path.
+         * @param bool   $is_path             Indicates if the file path is being provided instead of the plugin slug.
          *
          * @return string File size with unit of measurement.
          */
-        public function get_log_file_size($plugin_name)
+        public function get_log_file_size($plugin_name_or_path, $is_path = \false)
         {
         }
         /**
@@ -31102,6 +31193,7 @@ namespace Gravity_Forms\Gravity_Forms\Settings\Config {
     }
 }
 namespace Gravity_Forms\Gravity_Forms\Settings\Fields {
+    #[\AllowDynamicProperties]
     class Base implements \ArrayAccess
     {
         /**
@@ -31205,6 +31297,142 @@ namespace Gravity_Forms\Gravity_Forms\Settings\Fields {
          * @var Settings
          */
         public $settings;
+        /**
+         * Field id.
+         *
+         * @since 2.5
+         *
+         * @var int
+         */
+        public $id;
+        /**
+         * Field callback.
+         *
+         * @since 2.5
+         *
+         * @var callable
+         */
+        protected $callback;
+        /**
+         * Field feedback callback.
+         *
+         * @since 2.5
+         *
+         * @var callable
+         */
+        protected $feedback_callback;
+        /**
+         * Field hidden property.
+         *
+         * @since 2.5
+         *
+         * @var string
+         */
+        public $hidden;
+        /**
+         * Field html.
+         *
+         * @since 2.5
+         *
+         * @var string
+         */
+        public $html;
+        /**
+         * Field description.
+         *
+         * @since 2.5
+         *
+         * @var string
+         */
+        protected $description;
+        /**
+         * Field tooltip.
+         *
+         * @since 2.5
+         *
+         * @var string
+         */
+        protected $tooltip;
+        /**
+         * Field content after input.
+         *
+         * @since 2.5
+         *
+         * @var string
+         */
+        protected $after_input;
+        /**
+         * Field choices.
+         *
+         * @since 2.5
+         *
+         * @var array
+         */
+        protected $choices;
+        /**
+         * Field taxonomy.
+         *
+         * @since 2.5
+         *
+         * @var string
+         */
+        protected $taxonomy;
+        /**
+         * Field value.
+         *
+         * @since 2.5
+         *
+         * @var string
+         */
+        protected $value;
+        /**
+         * Field placeholder
+         *
+         * @since 2.5
+         *
+         * @var string
+         */
+        protected $placeholder;
+        /**
+         * Checkbox input attributes
+         *
+         * @since 2.5
+         *
+         * @var array
+         */
+        protected $checkbox;
+        /**
+         * Select input attributes
+         *
+         * @since 2.5
+         *
+         * @var array
+         */
+        protected $select;
+        /**
+         * Whether field is readonly
+         *
+         * @since 2.5
+         *
+         * @var string
+         */
+        public $readonly;
+        /**
+         * Field error message.
+         *
+         * @since 2.5
+         *
+         * @var string|false
+         */
+        protected $error = false;
+        /**
+         * Field onchange attribute.
+         *
+         * @since 2.5
+         *
+         * @var string|false
+         */
+        public $onchange;
         /**
          * Current function rendering field.
          *
@@ -31620,6 +31848,14 @@ namespace Gravity_Forms\Gravity_Forms\Settings\Fields {
          */
         public $image_select = false;
         /**
+         * Whether the inputs should be horizontal.
+         *
+         * @since 2.5
+         *
+         * @var bool
+         */
+        public $horizontal;
+        /**
          * Initialize field.
          *
          * @since 2.5
@@ -31713,7 +31949,7 @@ namespace Gravity_Forms\Gravity_Forms\Settings\Fields {
          */
         public $inputs = array();
         /**
-         * Initialize Checbox and Select field.
+         * Initialize Checkbox and Select field.
          *
          * @since 2.5
          *
@@ -31799,6 +32035,11 @@ namespace Gravity_Forms\Gravity_Forms\Settings\Fields {
          * @var string
          */
         public $data_format = 'bool';
+        public $onclick;
+        protected $no_choices;
+        protected $horizontal;
+        protected $enabledLabel;
+        protected $onkeypress;
         // # RENDER METHODS ------------------------------------------------------------------------------------------------
         /**
          * Render field.
@@ -31871,6 +32112,8 @@ namespace Gravity_Forms\Gravity_Forms\Settings\Fields {
         public $type = 'conditional_logic';
         public $checkbox = array('label' => 'Enable Condition', 'hidden' => false);
         public $object_type;
+        protected $checkbox_label;
+        protected $instructions;
         /**
          * Initialize Conditional Logic field.
          *
@@ -31988,6 +32231,10 @@ namespace Gravity_Forms\Gravity_Forms\Settings\Fields {
          * @var array
          */
         public $value_field = array('title' => '', 'placeholder' => '', 'allow_custom' => true);
+        protected $excluded_field_types;
+        protected $required_field_types;
+        protected $merge_tags;
+        protected $field_map;
         /**
          * Initialize Generic Map field.
          *
@@ -32197,6 +32444,15 @@ namespace Gravity_Forms\Gravity_Forms\Settings\Fields {
          */
         public $enhanced_ui = false;
         /**
+         * Field content after select.
+         *
+         * @since 2.5
+         *
+         * @var string
+         */
+        public $after_select;
+        public $disabled;
+        /**
          * Register scripts to enqueue when displaying field.
          *
          * @since 2.5
@@ -32270,6 +32526,7 @@ namespace Gravity_Forms\Gravity_Forms\Settings\Fields {
          * @var array
          */
         public $args = array();
+        protected $fields_callback;
         /**
          * Initialize Field Select field.
          *
@@ -32547,6 +32804,8 @@ namespace Gravity_Forms\Gravity_Forms\Settings\Fields {
          * @var string
          */
         public $input_type = 'text';
+        protected $step;
+        protected $append;
         // # RENDER METHODS ------------------------------------------------------------------------------------------------
         /**
          * Render field.
@@ -32596,6 +32855,22 @@ namespace Gravity_Forms\Gravity_Forms\Settings\Fields {
          * @var bool
          */
         public $use_editor = false;
+        /**
+         * Number of rows.
+         *
+         * @since 2.5
+         *
+         * @var int
+         */
+        public $rows;
+        /**
+         * Editor height.
+         *
+         * @since 2.5
+         *
+         * @var int
+         */
+        public $editor_height;
         /**
          * Initialize Textarea field.
          *
@@ -32671,6 +32946,7 @@ namespace Gravity_Forms\Gravity_Forms\Settings\Fields {
          * @var string
          */
         public $toggle_label;
+        protected $disabled;
         // # RENDER METHODS ------------------------------------------------------------------------------------------------
         /**
          * Render field.
@@ -33651,9 +33927,26 @@ namespace Gravity_Forms\Gravity_Forms\Telemetry {
          */
         public $key = '';
         /**
+         * @var bool $data_collection Whether data collection is allowed.
+         */
+        public $data_collection = '';
+        /**
          * @var string
          */
         const TELEMETRY_ENDPOINT = 'https://in.gravity.io/';
+        public function __construct()
+        {
+        }
+        /**
+         * Determine if the user has allowed data collection.
+         *
+         * @since 2.8.3
+         *
+         * @return false|mixed|null
+         */
+        public function is_data_collection_allowed()
+        {
+        }
         /**
          * Get the current telemetry data.
          *
@@ -33791,6 +34084,26 @@ namespace Gravity_Forms\Gravity_Forms\Telemetry {
          * @return array
          */
         public function get_site_basic_info()
+        {
+        }
+        /**
+         * Collect the data from the Gravity Forms settings page
+         *
+         * @since 2.8.3
+         *
+         * @return array
+         */
+        public function get_gf_settings()
+        {
+        }
+        /**
+         * Count the number of forms with legacy mode enabled.
+         *
+         * @since 2.8.3
+         *
+         * @return array
+         */
+        public function get_legacy_forms()
         {
         }
         /**
