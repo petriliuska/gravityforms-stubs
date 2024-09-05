@@ -486,7 +486,7 @@ namespace {
          *
          * @return bool True if current user can uninstall the plugin. False otherwise
          */
-        public static function current_user_can_uninstall($caps = 'gravityforms_uninstall', $plugin_path = 'gravityforms/gravityforms.php')
+        public static function current_user_can_uninstall($caps = 'gravityforms_uninstall', $plugin_path = \GF_PLUGIN_BASENAME)
         {
         }
         public static function current_user_can_any($caps)
@@ -539,6 +539,16 @@ namespace {
         public static function get_remote_message()
         {
         }
+        /**
+         * Returns the license key MD5.
+         *
+         * If this is a multisite installation, and the current site doesn't have a key saved, it will fallback to the network option containing the key from the main site.
+         *
+         * @since unknown
+         * @since 2.8.17 Added the network option fallback.
+         *
+         * @return string|false
+         */
         public static function get_key()
         {
         }
@@ -1891,6 +1901,18 @@ namespace {
         public static function record_cron_event($hook)
         {
         }
+        /**
+         * Determines if this is a network activated multisite installation.
+         *
+         * @since 2.8.17
+         *
+         * @param string $plugin Path to the plugin file relative to the plugins directory.
+         *
+         * @return bool
+         */
+        public static function is_network_active($plugin = \GF_PLUGIN_BASENAME)
+        {
+        }
     }
     class GFCategoryWalker extends \Walker
     {
@@ -2932,7 +2954,18 @@ namespace {
         public static function handle_submission(&$form, &$lead, $ajax = \false)
         {
         }
-        public static function clean_up_files($form)
+        /**
+         * Deletes tmp files for the given form.
+         *
+         * @since Unknown
+         * @since 2.8.15 Added the $is_submission param.
+         *
+         * @param array $form          The form the tmp files are to be deleted for.
+         * @param bool  $is_submission Indicates if tmp files for the current form submission should be deletes as well.
+         *
+         * @return false|void
+         */
+        public static function clean_up_files($form, $is_submission = \true)
         {
         }
         /**
@@ -6117,8 +6150,9 @@ namespace {
          * Updates the license key, If multisite, it updates the license key for all sites in the network.
          *
          * @since 2.7
+         * @since 2.8.17 Updated to also store the key as a network option.
          *
-         * @param string $license The license key.
+         * @param string $license The license key MD5.
          *
          * @return void
          */
@@ -6143,13 +6177,19 @@ namespace {
          *
          * @var string $version The version number.
          */
-        public static $version = '2.8.8';
+        public static $version = '2.8.17';
         /**
          * Handles background upgrade tasks.
          *
          * @var GF_Background_Upgrader
          */
         public static $background_upgrader = \null;
+        /**
+         * The option name used to store the license key.
+         *
+         * @since 2.8.17
+         */
+        const LICENSE_KEY_OPT = 'rg_gforms_key';
         /**
          * Runs after Gravity Forms is loaded.
          *
@@ -8051,6 +8091,16 @@ namespace {
         {
         }
         /**
+         * Deletes old tmp files from the form-specific upload folders.
+         *
+         * @since 2.8.15
+         *
+         * @return void
+         */
+        public static function delete_old_tmp_uploads()
+        {
+        }
+        /**
          * Deletes all entry export files from the server that haven't been claimed within 24 hours.
          *
          * @since  2.0.0
@@ -8150,6 +8200,7 @@ namespace {
          * access tables that are not valid for this version of Gravity Forms.
          *
          * @since 2.3
+         * @deprecated 2.8.13
          *
          * @param $query
          *
@@ -10032,6 +10083,14 @@ namespace {
         {
         }
         //--------------  Form settings  ---------------------------------------------------
+        /**
+         * Get the capabilities required to access the form settings page.
+         *
+         * @return array
+         */
+        public function get_form_settings_capabilities()
+        {
+        }
         /**
          * Initializes form settings page
          * Hooks up the required scripts and actions for the Form Settings page
@@ -12467,6 +12526,42 @@ namespace {
         public function filter_form($form, $entry)
         {
         }
+        /**
+         * Determines if the specified blog is suitable for batch processing.
+         *
+         * @since 2.8.16
+         *
+         * @param int $blog_id The blog ID.
+         *
+         * @return bool
+         */
+        public function is_valid_blog($blog_id)
+        {
+        }
+        /**
+         * Deletes the site batches when the site is deleted.
+         *
+         * @since 2.8.16
+         *
+         * @param WP_Site|int $old_site The deleted site object or ID.
+         *
+         * @return void
+         */
+        public function delete_site_batches($old_site)
+        {
+        }
+        /**
+         * Deletes batches from the database.
+         *
+         * @since 2.8.16
+         *
+         * @param bool|int $all_blogs_in_network True to delete batches for all blogs. False to delete batches for the current blog. A blog ID to delete batches for the specified blog.
+         *
+         * @return bool|int
+         */
+        public function delete_batches($all_blogs_in_network = \false)
+        {
+        }
     }
     /**
      * GF_Feed_Processor Class.
@@ -13872,6 +13967,22 @@ namespace {
         {
         }
         public function get_likert_score($field, $entry)
+        {
+        }
+        /**
+         * Sets a unique page title to the results page based on the title
+         * and the form the user is viewing.
+         * 
+         * @since 2.8.16
+         * 
+         * @filter admin_title
+         * 
+         * @param string $admin_title The page title with extra context added.
+         * @param string $title       The original page title. 
+         * 
+         * @return string
+         */
+        public function set_unique_page_title($admin_title, $title)
         {
         }
         public static function get_default_field_results($form_id, $field, $search_criteria, &$offset, $page_size, &$more_remaining = \false)
@@ -16356,6 +16467,16 @@ namespace {
          * @return bool
          */
         public function upgrade($from_db_version = \null, $force_upgrade = \false)
+        {
+        }
+        /**
+         * Ensures the network option for the license key is set.
+         *
+         * @since 2.8.17
+         *
+         * @return void
+         */
+        public function set_license_network_option()
         {
         }
         /**
@@ -19264,6 +19385,18 @@ namespace {
         public function is_description_above($form)
         {
         }
+        /**
+         * Determines if the field validation message should be positioned above or below the input.
+         *
+         * @since 2.8.8
+         *
+         * @param array $form The Form Object currently being processed.
+         *
+         * @return bool
+         */
+        public function is_validation_above($form)
+        {
+        }
         public function is_administrative()
         {
         }
@@ -20068,6 +20201,16 @@ namespace {
          * @var string
          */
         public $type = 'captcha';
+        /**
+         * The reCAPTCHA field constructor.
+         *
+         * @since 2.8.13
+         *
+         * @param $data
+         */
+        public function __construct($data = array())
+        {
+        }
         public function get_form_editor_field_title()
         {
         }
@@ -20101,9 +20244,21 @@ namespace {
          *
          * @since 2.8
          *
-         * @return string
+         * @return string|array
          */
         public function get_field_sidebar_messages()
+        {
+        }
+        /**
+         * Recaptcha v2 does not work in conversational forms, so we have to remove it.
+         *
+         * @since 2.8.13
+         *
+         * @param $form
+         *
+         * @return void
+         */
+        public static function maybe_remove_recaptcha_v2($form)
         {
         }
         /**
@@ -27244,6 +27399,7 @@ namespace Gravity_Forms\Gravity_Forms\License {
         const URL_CHANGED = 'gravityapi_site_url_changed';
         const MAX_SITES_EXCEEDED = 'gravityapi_exceeds_number_of_sites';
         const MULTISITE_NOT_ALLOWED = 'gravityapi_multisite_not_allowed';
+        const NO_LICENSE_KEY = 'no_license_key';
         const NO_DATA = 'rest_no_route';
         const USABILITY_VALID = 'success';
         const USABILITY_ALLOWED = 'warning';
@@ -32526,7 +32682,7 @@ namespace Gravity_Forms\Gravity_Forms\Settings\Fields {
          * @var array
          */
         public $args = array();
-        protected $fields_callback;
+        public $fields_callback;
         /**
          * Initialize Field Select field.
          *
@@ -34625,6 +34781,7 @@ namespace Gravity_Forms\Gravity_Forms\Theme_Layers\Framework {
         protected $icon;
         protected $short_title;
         protected $priority;
+        protected $form_settings_capability;
         /**
          * @var Definition_Engine[]
          */
@@ -34708,6 +34865,14 @@ namespace Gravity_Forms\Gravity_Forms\Theme_Layers\Framework {
         {
         }
         public function icon()
+        {
+        }
+        /**
+         * Getter for form_settings_capability
+         *
+         * @return string
+         */
+        public function get_form_settings_capability()
         {
         }
     }
@@ -35011,6 +35176,16 @@ namespace Gravity_Forms\Gravity_Forms\Theme_Layers\API\Fluent {
         public function set_block_settings($settings)
         {
         }
+        /**
+         * Setter for capability.
+         *
+         * @param $capability
+         *
+         * @return $this
+         */
+        public function set_capability($capability)
+        {
+        }
     }
 }
 namespace Gravity_Forms\Gravity_Forms\Theme_Layers\API\Fluent\Layers {
@@ -35076,6 +35251,9 @@ namespace Gravity_Forms\Gravity_Forms\Theme_Layers\API\Fluent\Layers {
         {
         }
         public function set_icon($icon)
+        {
+        }
+        public function set_capability($capability)
         {
         }
     }
@@ -35283,6 +35461,12 @@ namespace Gravity_Forms\Gravity_Forms\Theme_Layers {
          * @return array
          */
         public function form_settings_fields($form)
+        {
+        }
+        /**
+         * Get the form settings capabilities.
+         */
+        public function get_form_settings_capabilities()
         {
         }
     }
