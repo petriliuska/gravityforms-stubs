@@ -27,6 +27,18 @@ namespace {
         {
         }
         /**
+         * Returns the decimal and thousands separators for the specified number format.
+         *
+         * @since 2.9.3
+         *
+         * @param string $number_format The number format to get the separators for.
+         *
+         * @return array Returns an array containing the decimal and thousands separators.
+         */
+        public static function get_number_separators($number_format)
+        {
+        }
+        /**
          * Determines if the current page is the block editor.
          *
          * @since 2.7
@@ -726,7 +738,7 @@ namespace {
         }
         /**
          * @deprecated
-         *
+         * @remove-in 3.0
          * @param GF_Field_Checkbox $field
          * @param                   $value
          * @param                   $disabled_text
@@ -738,7 +750,7 @@ namespace {
         }
         /**
          * @deprecated Deprecated since 1.9. Use GF_Field_Checkbox::get_radio_choices() instead.
-         *
+         * @remove-in 3.0
          * @param GF_Field_Radio $field
          * @param string         $value
          * @param                $disabled_text
@@ -789,7 +801,7 @@ namespace {
         }
         /**
          * @deprecated
-         *
+         * @remove-in 3.0
          * @param GF_Field $field
          *
          * @return mixed
@@ -878,7 +890,7 @@ namespace {
         }
         /**
          * @deprecated
-         *
+         * @remove-in 3.0
          * @param GF_Field_CAPTCH $field
          *
          * @return mixed
@@ -888,7 +900,7 @@ namespace {
         }
         /**
          * @deprecated
-         *
+         * @remove-in 3.0
          * @param $field
          * @param $pos
          *
@@ -1048,13 +1060,55 @@ namespace {
         public static function round_number($number, $rounding)
         {
         }
-        public static function get_calculation_value($field_id, $form, $lead, $number_format = '')
+        /**
+         * Gets the calculation value for a specific field.
+         *
+         * @since unknown
+         *
+         * @since 2.9.3 Added the $modifier parameter.
+         *
+         * @param int    $field_id      The ID of the field.
+         * @param array  $form          The form object.
+         * @param array  $lead          The lead object.
+         * @param string $number_format The number format.
+         * @param string $modifier      The modifier.
+         *
+         * @return float|int The calculation value.
+         */
+        public static function get_calculation_value($field_id, $form, $lead, $number_format = '', $modifier = '')
         {
         }
         public static function has_currency_value($field)
         {
         }
         public static function conditional_shortcode($attributes, $content = \null)
+        {
+        }
+        /**
+         * If the specified conditional logic operation requires a number formatted as numeric, this method will format it and return the result.
+         *
+         * @since 2.9.1
+         *
+         * @param string $text          The text to be formatted.
+         * @param string $operation     The conditional logic operation to be performed. (i.e. >, <, ...)
+         * @param string $number_format How the $text parameter is formatted. (i.e. currency, decimal_dot, ...).
+         * NOTE: This parameter is optional for backwards compatibility, but it is recommended to always specify it. When not specified, the method will "best guess" the format based on the $text parameter and the default currency of the site.
+         *
+         * @return int|mixed|string Returns a number formatted as a float.
+         */
+        public static function maybe_format_numeric($text, $operation, $number_format = '')
+        {
+        }
+        /**
+         * Determines if the specified text is formatted as a date or time.
+         *
+         * @since 2.9.3
+         *
+         * @param string $text The text to be evaluated.
+         *
+         * @return bool Returns true if $text is formatted as a date or time, false otherwise.
+         */
+        public static function is_date_time_formatted($text)
         {
         }
         public static function is_valid_for_calcuation($field)
@@ -1157,7 +1211,7 @@ namespace {
          * Has the dismissible message been dismissed by the current user?
          *
          * @deprecated since 2.5.7
-         *
+         * @remove-in 3.0
          * @param $key
          *
          * @return bool
@@ -1169,7 +1223,7 @@ namespace {
          * Returns the database key for the message.
          *
          * @deprecated since 2.5.7
-         *
+         * @remove-in 3.0
          * @param $key
          *
          * @return string
@@ -1335,8 +1389,8 @@ namespace {
          * Localize i18n strings needed for admin and theme.
          *
          * @since 2.5
-         *
-         * @deprecated since 2.6
+         * @deprecated 2.6
+         * @remove-in 3.0
          * @see        class-gf-config-service-provider.php::register_config_items()
          */
         public static function localize_gform_i18n()
@@ -1344,6 +1398,7 @@ namespace {
         }
         /**
          * @deprecated since 2.6
+         * @remove-in 3.0
          * @see        class-gf-config-service-provider.php::register_config_items()
          */
         public static function localize_gform_gravityforms_multifile()
@@ -1353,8 +1408,8 @@ namespace {
          * Localizes a variable for determining if a form is using legacy markup.
          *
          * @since 2.5
-         *
          * @deprecated since 2.6
+         * @remove-in 3.0
          * @see        class-gf-config-service-provider.php::register_config_items()
          *
          * @param string $script The handle of the script in which to localize the variable.
@@ -1367,11 +1422,10 @@ namespace {
          * Localize legacy checks for each form on the page.
          *
          * @since 2.5
-         *
          * @deprecated since 2.6
+         * @remove-in 3.0
          * @see        class-gf-config-service-provider.php::register_config_items()
-         *
-         * @see gform_gf_legacy_multi
+         * @see        gform_gf_legacy_multi
          */
         public static function localize_gf_legacy_multi()
         {
@@ -1421,6 +1475,7 @@ namespace {
          * mcrypt_encrypt is deprecated in PHP 7.1, use GFCommon::openssl_encrypt() instead.
          *
          * @deprecated 2.3
+         * @remove-in 3.0
          *
          * @param      $text
          * @param null $key
@@ -1437,6 +1492,7 @@ namespace {
          * mcrypt_decrypt is deprecated in PHP 7.1, use GFCommon::openssl_decrypt() instead.
          *
          * @deprecated 2.3
+         * @remove-in 3.0
          *
          * @param      $text
          * @param null $key
@@ -1674,8 +1730,21 @@ namespace {
         /**
          * Determines if a form has legacy markup enabled.
          *
+         * @since 2.9
+         *
+         * @param int|array $form_or_id Form ID or form array.
+         *
+         * @return bool
+         */
+        public static function is_legacy_markup_enabled_og($form_or_id)
+        {
+        }
+        /**
+         * Determines if a form has legacy markup enabled.
+         *
          * @since 2.5
          * @since 2.7 Added caching.
+         * @since 2.9 Added early return if in the form editor.
          *
          * @param int|array $form_or_id Form ID or form array.
          *
@@ -1747,14 +1816,15 @@ namespace {
          * Return current database management system.
          *
          * @since 2.5
+         * @since 2.9 added SQLite detection.
          *
-         * @return string either MySQL or MariaDB
+         * @return string either MySQL, MariaDB, or SQLite.
          */
         public static function get_dbms_type()
         {
         }
         /**
-         * Returns the raw value from a SELECT version() db query.
+         * Returns the raw value from a SELECT version() or SELECT sqlite_version() db query.
          *
          * @since 2.7.1
          *
@@ -1911,6 +1981,40 @@ namespace {
          * @return bool
          */
         public static function is_network_active($plugin = \GF_PLUGIN_BASENAME)
+        {
+        }
+        /**
+         * Passes the given form through the gform_admin_pre_render filter.
+         *
+         * @since 2.9.1
+         *
+         * @param array|null $form The current form.
+         *
+         * @return array|null
+         */
+        public static function gform_admin_pre_render($form)
+        {
+        }
+        /**
+         * Applies the gform_disable_css filter and checks 'disable css global' setting to decide if default css should be output or not.
+         *
+         * @since 2.9.1
+         *
+         * @return bool|null
+         */
+        public static function is_frontend_default_css_disabled()
+        {
+        }
+        /**
+         * Decides whether to output the default css or not.
+         *
+         * Some admin pages need the default css even if the global setting is disabled or the frontend disable filter is used to disable outputting the css.
+         *
+         * @since 2.9.1
+         *
+         * @return bool
+         */
+        public static function output_default_css()
         {
         }
     }
@@ -2515,7 +2619,46 @@ namespace {
         {
         }
         /**
-         * Removes any extraneous strings from the begining of the JSON file to be imported.
+         * If a form includes images, import them into the WordPress media library.
+         *
+         * @since 2.9
+         *
+         * @param $form_ids
+         * @param $forms
+         *
+         * @return mixed
+         */
+        public static function import_form_media($form_ids, $forms)
+        {
+        }
+        /**
+         * Iterate through the form meta data to find images that need to be imported.
+         *
+         * Any meta data with the key of "file_url" will be imported into the WordPress media library.
+         *
+         * @since 2.9
+         *
+         * @param $form_meta
+         *
+         * @return mixed
+         */
+        public static function find_and_replace_media(&$form_meta)
+        {
+        }
+        /**
+         * Import images into the WordPress media library.
+         *
+         * @since 2.9
+         *
+         * @param $image_url
+         *
+         * @return false|int|WP_Error
+         */
+        public static function import_media($image_url)
+        {
+        }
+        /**
+         * Removes any extraneous strings from the beginning of the JSON file to be imported.
          *
          * @since 2.5.16
          *
@@ -2560,12 +2703,14 @@ namespace {
         }
         /**
          * @deprecated No longer used.
+         * @remove-in 3.0
          */
         public static function get_gmt_timestamp($local_timestamp)
         {
         }
         /**
          * @deprecated No longer used.
+         * @remove-in 3.0
          */
         public static function get_gmt_date($local_date)
         {
@@ -2785,6 +2930,14 @@ namespace {
         const SUBMISSION_INITIATED_BY_WEBFORM = 1;
         const SUBMISSION_INITIATED_BY_API = 2;
         const SUBMISSION_INITIATED_BY_API_VALIDATION = 3;
+        const SUBMISSION_METHOD_POSTBACK = 'postback';
+        const SUBMISSION_METHOD_AJAX = 'ajax';
+        const SUBMISSION_METHOD_IFRAME = 'iframe';
+        const SUBMISSION_TYPE_SAVE_AND_CONTINUE = 'save-continue';
+        const SUBMISSION_TYPE_SEND_LINK = 'send-link';
+        const SUBMISSION_TYPE_SUBMIT = 'submit';
+        const SUBMISSION_TYPE_NEXT = 'next';
+        const SUBMISSION_TYPE_PREVIOUS = 'previous';
         /**
          * Starting point for the form submission process. Handles the following tasks: Form validation, save for later logic, entry creation, notification and confirmation.
          *
@@ -2850,6 +3003,19 @@ namespace {
         {
         }
         /**
+         * Determines which themes to enqueue based on the form context and current page.
+         *
+         * @since 2.9
+         *
+         * @param  array        $form       Current form object.
+         * @param  string|array $field_types Optional. If specified, only load themes for forms with fields of these types. Can be a string with a single field type or an array of strings with multiple field types.
+         *
+         * @return array|string[] Returns an array of theme slugs to enqueue
+         */
+        public static function get_themes_to_enqueue($form, $field_types = '')
+        {
+        }
+        /**
          * Fire the post render events for a form instance when the form is visible on the page.
          *
          * @since 2.8.4
@@ -2883,6 +3049,51 @@ namespace {
         public static function get_form($form_id, $display_title = \true, $display_description = \true, $force_display = \false, $field_values = \null, $ajax = \false, $tabindex = 0, $form_theme = \null, $style_settings = \null)
         {
         }
+        /**
+         * Get the markup for a specific page in a multipage form.
+         *
+         * @since 2.9.5
+         *
+         * @param int    $form_id            The form ID.
+         * @param int    $page_number        The page number to render.
+         * @param array  $field_values       An array of field values to populate the form with.
+         * @param string $theme              The current form theme (i.e. orbital or gravity).
+         * @param array  $style_settings     An array of block or shortcode style settings.
+         * @param string $submission_method  The submission method (i.e. ajax or postback).
+         *
+         * @return string Returns the markup for the specified page of a multipage form.
+         */
+        public static function get_page($form_id, $page_number, $field_values, $theme, $style_settings, $submission_method)
+        {
+        }
+        /**
+         * Get the markup for a colletion of fields in a form. If $page_number is specified, only the markup for the fields on that page will be returned. Otherwise, the markup for all fields in the form will be returned.
+         *
+         * @since 2.9.5
+         *
+         * @param array $form             The current form object.
+         * @param array $field_values     The array of field values to populate the form with.
+         * @param array $submitted_values The array of submitted values if the form has been submitted.
+         * @param int   $page_number      The current page number to get fields for. Or 0 to get all fields.
+         *
+         * @return string Returns the markup for the specified page of a multipage form, or all fields in the form if no page number is specified.
+         */
+        public static function get_fields($form, $field_values, $submitted_values, $page_number = 0)
+        {
+        }
+        /**
+         * Gets the fields for a specific page in a form.
+         *
+         * since 2.9.5
+         *
+         * @param array $form        The form object.
+         * @param int   $page_number The page number to get fields for.
+         *
+         * @return array Returns an array of fields belonging to the specified page.
+         */
+        public static function get_fields_by_page($form, $page_number)
+        {
+        }
         public static function footer_init_scripts($form_id)
         {
         }
@@ -2905,7 +3116,7 @@ namespace {
         public static function get_submit_button_class($button, $form_id)
         {
         }
-        public static function gform_footer($form, $class, $ajax, $field_values, $previous_button, $display_title, $display_description, $tabindex = 1, $theme = \null, $style_settings = \null)
+        public static function gform_footer($form, $class, $ajax, $field_values, $previous_button, $display_title, $display_description, $tabindex = 1, $theme = \null, $style_settings = \null, $submission_method = self::SUBMISSION_METHOD_POSTBACK)
         {
         }
         public static function get_max_page_number($form)
@@ -3243,6 +3454,18 @@ namespace {
         public static function print_form_scripts($form, $ajax)
         {
         }
+        /**
+         * Check if a form has any Image Choice fields.
+         *
+         * @since 2.8
+         *
+         * @param $form
+         *
+         * @return mixed|null
+         */
+        public static function has_image_choices($form)
+        {
+        }
         public static function has_conditional_logic($form)
         {
         }
@@ -3349,15 +3572,20 @@ namespace {
         {
         }
         /**
-         * @param GF_Field $field
-         * @param string   $value
-         * @param bool     $force_frontend_label
-         * @param null     $form
-         * @param null     $field_values
+         * Gets the markup for a given field.
          *
-         * @return string|string[]|void
+         * @since 2.9.5 Added the optional $page_number parameter.
+         *
+         * @param GF_Field $field                The field object.
+         * @param string   $value                The field value to be pre-populated into the field.
+         * @param bool     $force_frontend_label Forces the frontend label to be displayed in the admin even if an admin label is configured. Defaults to false.
+         * @param array    $form                 The form object.
+         * @param array    $field_values         The array of field values used to pre-populate the form.
+         * @param int      $page_number          A non-zero value indicates that only that page should be rendered. This affects how page fields are rendered. Defaults to 0.
+         *
+         * @return string|null Returns the markup for the specified field.
          */
-        public static function get_field($field, $value = '', $force_frontend_label = \false, $form = \null, $field_values = \null)
+        public static function get_field($field, $value = '', $force_frontend_label = \false, $form = \null, $field_values = \null, $page_number = 0)
         {
         }
         /**
@@ -3457,6 +3685,58 @@ namespace {
         {
         }
         /**
+         * Returns the safe value of/for the gform_submission_method input.
+         *
+         * @since 2.9.2
+         *
+         * @param string $method The method or an empty string to get it from the submission.
+         *
+         * @return string
+         */
+        public static function get_submission_method($method = '')
+        {
+        }
+        /**
+         * Determines if the iframe-based Ajax submission method is in use.
+         *
+         * @since 2.9.2
+         *
+         * @return bool
+         */
+        public static function is_iframe_submission_method()
+        {
+        }
+        /**
+         * Parses and sanitizes the value of the gform_ajax input.
+         *
+         * @since 2.9.2
+         *
+         * @param bool $bypass_cache Indicates if the cached arguments should be ignored. Default is false.
+         *
+         * @return array|false
+         */
+        public static function parse_ajax_input($bypass_cache = \false)
+        {
+        }
+        /**
+         * Prepares the value for the gform_ajax input.
+         *
+         * @since 2.9.2
+         *
+         * @param int         $form_id             The form ID.
+         * @param bool        $display_title       Indicates if display of the form title is enabled.
+         * @param bool        $display_description Indicates if display of the form description is enabled.
+         * @param int         $tabindex            The starting tabindex.
+         * @param null|string $theme               Null or the name of the form theme.
+         * @param null|string $styles              Null or the JSON encoded form styles.
+         * @param bool        $include_hash        Indicates if the hash should be included.
+         *
+         * @return string
+         */
+        public static function prepare_ajax_input_value($form_id, $display_title, $display_description, $tabindex, $theme = \null, $styles = \null, $include_hash = \true)
+        {
+        }
+        /**
          * Returns the HTML for the ajax postback.
          *
          * @since 2.4.18
@@ -3529,7 +3809,7 @@ namespace {
          *
          * @param mixed $styles Array or JSON string of styles.
          *
-         * @return array|bool $styles
+         * @return array|bool|null $styles
          */
         public static function validate_form_styles($styles)
         {
@@ -3559,6 +3839,75 @@ namespace {
         public static function get_row_spacer($field, $form)
         {
         }
+        /**
+         * Filters the $form object through the gform_pre_render filter and caches the result so that this filter is only triggered once per request.
+         *
+         * @since 2.9.0
+         *
+         * @param array      $form          The form object being filtered.
+         * @param string     $context       The context that the method is being called in. Possible values are 'form_display' and 'form_config'.
+         * @param bool|null  $ajax          Whether the form is being displayed via AJAX. Only used when $context is 'form_display'.
+         * @param array|null $field_values  The field values to be used to populate the form. Only used when $context is 'form_display'.
+         *
+         * @return array Returns the form object after being filtered by the gform_pre_render filter.
+         */
+        public static function gform_pre_render($form, $context, $ajax = \null, $field_values = \null)
+        {
+        }
+        /**
+         * Flushes the forms cached by the gform_pre_render method.
+         *
+         * @since 2.9.0
+         *
+         * @param string $cache_key The cache key to flush. The format is FORM-ID_CONTEXT. Defaults to null and if not provided, all cached forms will be flushed.
+         *
+         * @return void
+         */
+        public static function flush_cached_forms($cache_key = \null)
+        {
+        }
+        /**
+         * @param array $form
+         * @param string $confirmation_message
+         * @param bool $ajax
+         * @return mixed
+         */
+        public static function get_confirmation_markup($form, $confirmation_message, $ajax, $style_settings = \false, $form_theme = \null)
+        {
+        }
+        /**
+         * Gets the last page's footer markup in a multipage form.
+         *
+         * @since 2.9.5
+         *
+         * @param array  $form                The current form object.
+         * @param string $label_placement     The label placement setting for the form.
+         * @param bool   $ajax                Indicates if AJAX is enabled for the current form.
+         * @param array  $field_values        The field values to be used to populate the form.
+         * @param bool   $display_title       Indicates if the form title should be displayed.
+         * @param bool   $display_description Indicates if the form description should be displayed.
+         * @param int    $tabindex            The starting tabindex.
+         * @param string $form_theme          The theme selected for the form.
+         * @param string $style_settings      The styles for the form.
+         * @param string $submission_method   The submission method for the form.
+         *
+         * @return string Returns the markup for the last page's footer.
+         */
+        public static function get_last_page_footer($form, $label_placement, $ajax, $field_values, $display_title, $display_description, $tabindex, $form_theme, $style_settings, $submission_method)
+        {
+        }
+        /**
+         * Gets the first page's header markup in a multipage form.
+         *
+         * @since 2.9.5
+         *
+         * @param array $form The current form object.
+         *
+         * @return string Returns the markup for the first page's header.
+         */
+        public static function get_first_page_header($form)
+        {
+        }
     }
     class GFFormList
     {
@@ -3569,6 +3918,50 @@ namespace {
         {
         }
         public static function output_form_list_script_block()
+        {
+        }
+        /**
+         * Returns the markup for the screen options.
+         *
+         * @since 2.9.2
+         *
+         * @param $status
+         * @param $args
+         *
+         * @return string
+         */
+        public static function get_screen_options_markup($status, $args)
+        {
+        }
+        /**
+         * Returns the attributes for the user-specific screen options.
+         *
+         * @since 2.9.2
+         *
+         * @return array Label and choices for the screen options settings.
+         */
+        public static function get_screen_options_attributes()
+        {
+        }
+        /*
+         * Returns the dropdown markup for a screen option setting.
+         *
+         * @since 2.9.2
+         *
+         * @param string $name The name of the screen option setting.
+         *
+         * @return string HTML markup for the dropdown.
+         */
+        public static function get_screen_option_dropdown($name)
+        {
+        }
+        /**
+         * Returns the values for the user-specific screen options. If not saved by the current user, the default values are returned.
+         *
+         * @since 2.9.2
+         * @return array
+         */
+        public static function get_screen_options_values()
         {
         }
     }
@@ -3688,6 +4081,7 @@ namespace {
          * Prepare form settings fields.
          *
          * @since 2.5
+         * @since 2.9.8 Updated honeypotAction default to spam.
          *
          * @param array $form Form being edited.
          *
@@ -3731,6 +4125,7 @@ namespace {
          * Initialize Plugin Settings fields renderer.
          *
          * @since 2.5
+         * @since 2.9.8 Updated honeypotAction default to spam.
          */
         public static function initialize_settings_renderer()
         {
@@ -3773,7 +4168,6 @@ namespace {
          * @uses    SCRIPT_DEBUG
          * @uses    GFFormsModel::get_form_meta()
          * @uses    GFFormSettings::get_tabs()
-         * @uses    GFCommon::form_page_title()
          * @uses    GFCommon::display_dismissible_message()
          * @uses    GFCommon::display_admin_message()
          * @uses    GFForms::top_toolbar()
@@ -4460,6 +4854,16 @@ namespace {
         {
         }
         /**
+         * Query request checking if the site contains any forms with Legacy markup.
+         *
+         * @since 2.9.1
+         *
+         * @returns bool
+         */
+        public static function has_legacy_markup()
+        {
+        }
+        /**
          * Recursively checks the highest ID for all the fields in the form and then returns the highest ID + 1.
          *
          * @since 2.4.6.12
@@ -4510,6 +4914,7 @@ namespace {
          * Adds default form properties
          *
          * @deprecated 1.9
+         * @remove-in 3.0
          */
         public static function add_default_properties($form)
         {
@@ -4566,6 +4971,60 @@ namespace {
         {
         }
         public static function update_entries_property($leads, $property_name, $property_value)
+        {
+        }
+        /**
+         * Changes the status of multiple entries.
+         *
+         * @since 2.9.0
+         * @access public
+         *
+         * @param array  $leads  The entries to transition.
+         * @param string $status The new status.
+         *
+         * @return void
+         */
+        public static function change_entries_status($leads, $status)
+        {
+        }
+        /**
+         * Changes the status of a single entry.
+         *
+         * @since 2.9.0
+         * @access public
+         *
+         * @param int    $lead_id The entry ID.
+         * @param string $status  The new status.
+         *
+         * @return void
+         */
+        public static function change_entry_status($lead_id, $status)
+        {
+        }
+        /**
+         * Restores the status of a single entry to its previous status.
+         *
+         * @since 2.9.0
+         * @access public
+         *
+         * @param int $lead_id The entry ID.
+         *
+         * @return void
+         */
+        public static function restore_entry_status($lead_id)
+        {
+        }
+        /**
+         * Restores the status of multiple entries to their previous status.
+         *
+         * @since 2.9.0
+         * @access public
+         *
+         * @param array $leads The entries to restore.
+         *
+         * @return void
+         */
+        public static function restore_entries_status($leads)
         {
         }
         public static function update_entry_property($lead_id, $property_name, $property_value, $update_akismet = \true, $disable_hook = \false)
@@ -4999,7 +5458,27 @@ namespace {
         public static function is_value_match($field_value, $target_value, $operation = 'is', $source_field = \null, $rule = \null, $form = \null)
         {
         }
+        /*
+         * @deprecated 2.9.1.  Use GFFormsModel::matches_conditional_operation instead.
+         *
+         * @remove-in 3.1
+         */
         public static function matches_operation($val1, $val2, $operation)
+        {
+        }
+        /**
+         * This method will evaluate the specified operation between the two specified values and return the result. If the two values match the operation, the method will return true. Otherwise, it will return false.
+         * The method supports the following operations: is, isnot, greater_than or >, less_than or <, contains, starts_with, ends_with.
+         *
+         * @since 2.9.1
+         *
+         * @param string $val1      The first value to be compared. Must be formatted as a valid number for greater_than and less_than operations.
+         * @param string $val2      The second value to be compared. Must be formatted as a valid number for greater_than and less_than operations.
+         * @param string $operation The operation to be performed with the specified values.
+         *
+         * @return bool Returns true if the two values match the specified operation. Otherwise, it will return false.
+         */
+        public static function matches_conditional_operation($val1, $val2, $operation)
         {
         }
         public static function get_custom_choices()
@@ -5025,6 +5504,7 @@ namespace {
         }
         /**
          * @deprecated 2.4
+         * @remove-in 3.0
          *
          * @param int $expiration_days
          *
@@ -5048,6 +5528,7 @@ namespace {
         /**
          *
          * @deprecated 2.4
+         * @remove-in 3.0
          *
          * @param $token
          *
@@ -5071,6 +5552,7 @@ namespace {
         /**
          *
          * @deprecated 2.4
+         * @remove-in 3.0
          *
          * @param        $form
          * @param        $entry
@@ -5138,6 +5620,7 @@ namespace {
         }
         /**
          * @deprecated 2.4
+         * @remove-in 3.0
          *
          * @param $resume_token
          *
@@ -5161,6 +5644,7 @@ namespace {
         /**
          *
          * @deprecated 2.4
+         * @remove-in 3.0
          *
          * @param $token
          * @param $email
@@ -5379,6 +5863,18 @@ namespace {
         public static function get_upload_path($form_id)
         {
         }
+        /*
+         * Get the path to the temporary upload directory for a form
+         *
+         * @since 2.9.3
+         *
+         * @param int $form_id The ID of the form
+         *
+         * @return array The path and url to the temporary upload directory for a form
+         */
+        public static function get_tmp_upload_location($form_id)
+        {
+        }
         public static function get_upload_url($form_id)
         {
         }
@@ -5460,6 +5956,8 @@ namespace {
         /**
          *
          * @deprecated 2.0
+         * @remove-in 3.0
+         *
          * @param      $lead
          * @param      $field_number
          * @param      $form
@@ -5495,6 +5993,7 @@ namespace {
         /**
          *
          * @deprecated 2.3
+         * @remove-in 3.0
          *
          * @param $form_id
          * @param int $sort_field_number
@@ -5518,6 +6017,7 @@ namespace {
         /**
          *
          * @deprecated 2.3
+         * @remove-in 3.0
          *
          * @param $args
          *
@@ -5528,6 +6028,8 @@ namespace {
         }
         /**
          * @deprecated 2.3
+         * @remove-in 3.0
+         *
          * @param $results
          *
          * @return array
@@ -5549,6 +6051,7 @@ namespace {
          * Use GFAPI::count_entries() instead.
          *
          * @deprecated 2.3.0.1
+         * @remove-in 3.0
          *
          *
          * @param $form_id
@@ -5571,6 +6074,7 @@ namespace {
          * This function is not used and is only included for backwards compatibility. Use GFAPI::count_entries() instead.
          *
          * @deprecated 2.3.0.1
+         * @remove-in 3.0
          *
          * @since 2.3.0.1
          *
@@ -5635,6 +6139,16 @@ namespace {
         public static function has_input($field, $input_id)
         {
         }
+        /**
+         * Returns the URL of the current request.
+         *
+         * @since Unknown
+         * @since 2.9.1 Updated to return the referring URL for requests made via admin-ajax.php.
+         *
+         * @param bool $force_ssl Indicates if the URL should start with https.
+         *
+         * @return string
+         */
         public static function get_current_page_url($force_ssl = \false)
         {
         }
@@ -5671,6 +6185,8 @@ namespace {
         }
         /**
          * @deprecated 2.8 HTML5 setting was removed, and HTML5 is now always enabled.
+         * @remove-in 3.0
+         *
          * @return true
          */
         public static function is_html5_enabled()
@@ -5862,6 +6378,7 @@ namespace {
         }
         /**
          * @deprecated 2.2 Use gf_upgrade()->dbDelta() instead
+         * @remove-in 3.0
          */
         public static function dbDelta($sql)
         {
@@ -5914,6 +6431,7 @@ namespace {
          * Returns an array of field IDs that have been encrypted using GFCommon::encrypt()
          *
          * @deprecated
+         * @remove-in 3.0
          *
          * @since unknown
          *
@@ -5928,6 +6446,7 @@ namespace {
          * Stores the field IDs that have been encrypted using GFCommon::encrypt()
          *
          * @deprecated
+         * @remove-in 3.0
          *
          * @since unknown
          *
@@ -5943,6 +6462,7 @@ namespace {
          * Checks whether the given field was encrypted using GFCommon::encrpyt() and registered using GFCommon::set_encrypted_fields()
          *
          * @deprecated
+         * @remove-in 3.0
          *
          * @since unknown
          *
@@ -6006,6 +6526,7 @@ namespace {
         }
         /**
          * @deprecated 2.4.16
+         * @remove-in 3.0
          *
          * @param $entry
          * @param $form
@@ -6137,6 +6658,8 @@ namespace {
          *
          * @since 2.4.24
          *
+         * @since 2.7.17 Added support for encrypting settings fields.
+         *
          * @param int    $feed_id        The ID of the feed being updated.
          * @param string $property_name  The name of the property (column) being updated.
          * @param mixed  $property_value The new value of the specified property.
@@ -6177,7 +6700,7 @@ namespace {
          *
          * @var string $version The version number.
          */
-        public static $version = '2.8.17';
+        public static $version = '2.9.7.2';
         /**
          * Handles background upgrade tasks.
          *
@@ -6591,6 +7114,16 @@ namespace {
         {
         }
         /**
+         * Returns the lowercase value of the string-based page query argument.
+         *
+         * @since 2.9.1
+         *
+         * @return string
+         */
+        public static function get_page_query_arg()
+        {
+        }
+        /**
          * Determines if the current page is part of Gravity Forms.
          *
          * Returns true if the current page is one of Gravity Forms page or first-party add-on page. False otherwise.
@@ -6674,6 +7207,9 @@ namespace {
          * @return string The modified admin title.
          */
         public static function modify_admin_title($admin_title, $title)
+        {
+        }
+        public static function get_default_theme()
         {
         }
         /**
@@ -6823,6 +7359,23 @@ namespace {
          * @param string $version     The add-on version.
          */
         public static function maybe_display_update_notification($plugin_name, $plugin_data, $slug = '', $version = '')
+        {
+        }
+        /**
+         * Retrieves the status messages that are needed based on license type or if
+         * an update is available. Updates only apply to the Sysetm Settings Updates
+         * page, WP handles the Plugins page update messages.
+         *
+         * @since: 2.9
+         *
+         * @param string $plugin_name The plugin filename.
+         * @param array  $plugin_data The WP plugin header data.
+         * @param string $slug        The plugin slug
+         * @param string $version     The current version of the plugin.
+         *
+         * @return array The status messages.
+         */
+        public static function get_status_messages($plugin_name, $plugin_data, $slug = '', $version = '')
         {
         }
         /**
@@ -7322,7 +7875,6 @@ namespace {
          *
          * @uses   GFForms::maybe_display_wizard()
          * @uses   GFCommon::ensure_wp_version()
-         * @uses   GFForms::get()
          * @uses   GFEntryList::leads_page()
          * @uses   GFEntryDetail::lead_detail_page()
          * @uses   GFFormSettings::form_settings_page()
@@ -7671,24 +8223,48 @@ namespace {
         /**
          * Displays the form switcher dropdown.
          *
-         * @param string $title The form title
+         *  @since  Unknown
+         *  @since  2.9.6   Updated to list only the recent forms.
          *
-         * @since  Unknown
-         * @access public
+         * @param string $title   The form title.
+         * @param string $form_id The form ID.
          */
-        public static function form_switcher($title = '')
+        public static function form_switcher($title = '', $form_id = '')
         {
         }
         /**
          * Checks if the form has a results/sales page and returns the slug of the add-on that implements the page.
          *
          * @since 2.5.13
+         * @since 2.9.6 Param changed from (object) $form to (int) $form_id.
          *
-         * @param Object|array $form The form object
+         * @param int $form_id The form id
          *
          * @return string|int  The slug string if found, 0 if not found
          */
-        protected static function get_form_switcher_results_page_slug($form)
+        protected static function get_form_switcher_results_page_slug($form_id)
+        {
+        }
+        /*
+         * Returns the results page attribute to be used in the form switcher.
+         *
+         * @since 2.9.6
+         *
+         * @param int $form_id The form ID.
+         * @return string The results page attribute.
+         */
+        public static function get_form_switcher_results_page_attr($form_id)
+        {
+        }
+        /**
+         * Returns the subview attribute to be used in the form switcher.
+         *
+         * @since 2.9.6
+         *
+         * @param int $form_id The form ID.
+         * @return string The subview attribute.
+         */
+        public static function get_form_switcher_subview_attr($form_id)
         {
         }
         /**
@@ -8091,16 +8667,6 @@ namespace {
         {
         }
         /**
-         * Deletes old tmp files from the form-specific upload folders.
-         *
-         * @since 2.8.15
-         *
-         * @return void
-         */
-        public static function delete_old_tmp_uploads()
-        {
-        }
-        /**
          * Deletes all entry export files from the server that haven't been claimed within 24 hours.
          *
          * @since  2.0.0
@@ -8125,6 +8691,7 @@ namespace {
          * @since  2.0.0
          * @access public
          * @global $wpdb
+         * @remove-in 3.0
          */
         public static function delete_orphaned_entries()
         {
@@ -8139,6 +8706,40 @@ namespace {
          * @access public
          */
         public static function load_admin_bar_styles()
+        {
+        }
+        /**
+         * Retrieve a list of the image sizes to be registered.
+         *
+         * @since 2.9.2
+         *
+         * @return array $image_sizes The array of image sizes with their respective attributes.
+         */
+        public static function get_image_sizes()
+        {
+        }
+        /**
+         * Add Gravity Forms image sizes.
+         *
+         * @since 2.9
+         *
+         * @return void
+         */
+        public static function register_image_sizes()
+        {
+        }
+        /*
+         * We registered image sizes, but we don't actually want to use these image
+         * sizes unless a form has image choices, so we're going to remove them here
+         * and put them back when we need them.
+         *
+         * @since 2.9.2
+         *
+         * @param array $sizes The array of image sizes with their respective attributes.
+         *
+         * @return array $sizes The array of image sizes with their respective attributes.
+         */
+        public static function remove_image_sizes($sizes)
         {
         }
         /**
@@ -8162,6 +8763,7 @@ namespace {
          *
          * @return void
          * @deprecated Use gf_upgrade()->drop_index() instead
+         * @remove-in 3.0
          */
         public static function drop_index($table, $index)
         {
@@ -8170,7 +8772,7 @@ namespace {
          * Fixes case for database queries.
          *
          * @deprecated 2.2
-         *
+         * @remove-in 3.0
          * @since  Unknown
          * @access public
          *
@@ -8193,20 +8795,6 @@ namespace {
          * @since 2.3
          */
         public static function init_background_upgrader()
-        {
-        }
-        /**
-         * Target for the WordPress 'query' filter. Triggers an PHP Notice if an outdated add-on or custom code attempts to
-         * access tables that are not valid for this version of Gravity Forms.
-         *
-         * @since 2.3
-         * @deprecated 2.8.13
-         *
-         * @param $query
-         *
-         * @return string
-         */
-        public static function filter_query($query)
         {
         }
         /**
@@ -8298,6 +8886,7 @@ namespace {
      *
      * @deprecated
      * Exists only for backwards compatibility. Used GFForms instead.
+     * @remove-in 3.0
      */
     class RGForms extends \GFForms
     {
@@ -8577,6 +9166,10 @@ namespace {
          * @var string The hook suffix for the app menu
          */
         public $app_hook_suffix;
+        /**
+         * @var string The '.min' suffix to append to asset files in production mode.
+         */
+        protected $_asset_min;
         // ------------ Permissions -----------
         /**
          * @var string|array A string or an array of capabilities or roles that have access to the settings page
@@ -8624,7 +9217,40 @@ namespace {
         public function bootstrap()
         {
         }
+        /**
+         * Initializes the theme layer process for the add-on.
+         *
+         * @since Unknown
+         *
+         */
         public function init_theme_layer()
+        {
+        }
+        /**
+         * Helper method that returns the theme styles that should be enqueued for the add-on. Returns an array in the format accepted by the Gravity Forms theme layer set_styles() method
+         *
+         * @since 2.9.0
+         *
+         * @param array  $form               The current form object to enqueue styles for.
+         * @param string $field_type         The field type associated with the add-on. Styles will only be enqueued on the frontend if the form has a field with the specified field type.
+         * @param string $gravity_theme_path The path to the gravity theme style. Optional. Only needed for add-ons that implement the gravity theme outside the default /assets/css/dist/theme.css path.
+         *
+         * @return array Returns and array of styles to enqueue in the format accepted by the Gravity Forms theme layer set_styles() method.
+         */
+        public function get_theme_layer_styles($form, $field_type = '', $gravity_theme_path = '')
+        {
+        }
+        /**
+         * Helper method that returns the themes that should be enqueued for the add-on. Returns an array of theme slugs.
+         *
+         * @since 2.9.0
+         *
+         * @param array        $form        The current form object to enqueue styles for.
+         * @param string|array $field_types The field type(s) associated with the add-on. Themes will only be enqueued on the frontend if the form has a field with the specified field type(s). Can be a string with a single field type or an array of strings with multiple field types.
+         *
+         * @return array Returns and array of theme slugs to enqueue.
+         */
+        public function get_themes_to_enqueue($form, $field_types = '')
         {
         }
         /**
@@ -8640,13 +9266,27 @@ namespace {
          * Gets all active, registered Add-Ons.
          *
          * @since Unknown
-         * @since 2.5.6 Added the $return_instances param.
+         * @since 2.5.6  Added the $return_instances param.
+         * @since 2.9.2  Added the $slug_as_key param.
          *
          * @param bool $return_instances Indicates if the current instances of the add-ons should be returned. Default is false.
+         * @param bool $slug_as_key      Indicates if the add-on slug should be used as the key to the add-on instance. Default is false.
          *
-         * @return string[]|GFAddOn[] An array of class names or instances.
+         * @return string[]|(GFAddOn|GFFeedAddOn|GFPaymentAddOn)[] An array of class names or instances.
          */
-        public static function get_registered_addons($return_instances = \false)
+        public static function get_registered_addons($return_instances = \false, $slug_as_key = \false)
+        {
+        }
+        /**
+         * Finds a registered add-on by its slug and return its instance.
+         *
+         * @since 2.7.17
+         *
+         * @param string $slug The add-on slug.
+         *
+         * @return GFAddOn Returns an instance of the add-on with the specified slug.
+         */
+        public static function get_addon_by_slug($slug)
         {
         }
         /**
@@ -9359,6 +9999,28 @@ namespace {
         {
         }
         public function get_save_button($sections)
+        {
+        }
+        /**
+         * Sets the current instance of object that handles settings encryption.
+         *
+         * @since 2.7.17
+         *
+         * @param \Gravity_Forms\Gravity_Forms\Settings\GF_Settings_Encryption $encryptor Settings encryptor.
+         *
+         * @return void
+         */
+        public function set_encryptor($encryptor)
+        {
+        }
+        /**
+         * Returns the current instance of the settings encryptor.
+         *
+         * @since 2.7.17
+         *
+         * @return GF_Settings_Encryption Returns the current instance of the settings encryptor.
+         */
+        public function get_encryptor()
         {
         }
         //------------- Field Types ------------------------------------------------------
@@ -10367,7 +11029,9 @@ namespace {
          *
          * @since Unknown
          *
-         * @return array|false
+         * @since 2.7.17 Added caching of plugin settings and encrypting of settings.
+         *
+         * @return array|false Returns the plugin settings or false if the settings haven't been saved yet.
          */
         public function get_plugin_settings()
         {
@@ -10389,6 +11053,8 @@ namespace {
          * Updates plugin settings with the provided settings
          *
          * @since Unknown
+         *
+         * @since 2.7.17 Added caching of plugin settings and encrypting of settings.
          *
          * @param array $settings Plugin settings to be saved.
          */
@@ -11341,6 +12007,14 @@ namespace {
          */
         protected $_bypass_feed_delay = \false;
         /**
+         * Indicates if the add-on supports processing feeds multiple times for the same entry.
+         *
+         * @since 2.9.2
+         *
+         * @var bool
+         */
+        protected $_supports_feed_reprocessing = \true;
+        /**
          * An array of properties relating to the delayed payment functionality.
          *
          * Set by passing the array to `$this->add_delayed_payment_support()` in `init()`.
@@ -11352,6 +12026,16 @@ namespace {
          * }
          */
         public $delayed_payment_integration = array();
+        /**
+         * Gets all active, registered feed add-ons.
+         *
+         * @since 2.9.2
+         *
+         * @return (GFFeedAddOn|GFPaymentAddOn)[]
+         */
+        public static function get_registered_feed_addons()
+        {
+        }
         /**
          * Attaches any filters or actions needed to bootstrap the addon.
          *
@@ -11403,13 +12087,59 @@ namespace {
         /**
          * Determines what feeds need to be processed for the provided entry.
          *
+         * @since  1.7.7
+         * @since  2.9.4 Updated to save the processing status for each feed of compatible add-ons.
+         *
          * @access public
+         *
          * @param array $entry The Entry Object currently being processed.
-         * @param array $form The Form Object currently being processed.
+         * @param array $form  The Form Object currently being processed.
          *
          * @return array $entry
          */
         public function maybe_process_feed($entry, $form)
+        {
+        }
+        /**
+         * Saves the status of the given feed to the "feed_{$feed_id}_status" entry meta.
+         *
+         * @since 2.9.4
+         *
+         * @param null|bool|array|WP_Error|Exception $result   The value returned by `process_feed()`.
+         * @param int                                $entry_id The ID of the entry the feed was processed for.
+         * @param int                                $feed_id  The ID of the feed that was processed.
+         * @param int                                $form_id  The ID of the form the entry and feed belong to.
+         *
+         * @return void
+         */
+        public function save_entry_feed_status($result, $entry_id, $feed_id, $form_id)
+        {
+        }
+        /**
+         * Triggers the post_process_feed hooks.
+         *
+         * @since 2.9.4
+         *
+         * @param array $feed  The feed which was processed.
+         * @param array $entry The entry the feed was processed for.
+         * @param array $form  The form the entry and feed belong to.
+         *
+         * @return void
+         */
+        public function post_process_feed($feed, $entry, $form)
+        {
+        }
+        /**
+         * Sets the "{slug}_is_fulfilled" entry meta.
+         *
+         * @since 2.9.4
+         *
+         * @param int $entry_id The entry ID.
+         * @param int $form_id  The form ID.
+         *
+         * @return void
+         */
+        public function fulfill_entry($entry_id, $form_id)
         {
         }
         /**
@@ -11451,16 +12181,35 @@ namespace {
         {
         }
         /**
+         * Determines if the add-on supports processing feeds multiple times for the same entry (e.g. by the async processor).
+         *
+         * @since 2.9.2
+         *
+         * @param array $feed  The feed to be processed
+         * @param array $entry The entry being processed.
+         * @param array $form  The form that the entry belongs to
+         *
+         * @return bool
+         */
+        public function is_reprocessing_supported($feed, $entry, $form)
+        {
+        }
+        /**
          * Processes feed action.
          *
          * @since  Unknown
+         * @since  2.9.4 Documented the supported return types for saving the feed status.
+         *
          * @access public
          *
-         * @param array  $feed  The Feed Object currently being processed.
-         * @param array  $entry The Entry Object currently being processed.
-         * @param array  $form  The Form Object currently being processed.
+         * @param array $feed  The Feed Object currently being processed.
+         * @param array $entry The Entry Object currently being processed.
+         * @param array $form  The Form Object currently being processed.
          *
-         * @return array|null Returns a modified entry object or null.
+         * @return void|null|bool|WP_Error|array The returned value determines if the feed status is saved to the "feed_{$feed_id}_status" entry meta.
+         *                                       - void or null when the feed status should not be saved.
+         *                                       - false or a WP_Error when a failed status should be saved.
+         *                                       - true or the entry array when a success status should be saved.
          */
         public function process_feed($feed, $entry, $form)
         {
@@ -11516,6 +12265,16 @@ namespace {
         {
         }
         //--------  Feed data methods  -------------------------
+        /**
+         * Gets the feeds for the specified form id.
+         *
+         * @since Unknown
+         * @since 2.7.17 Added support for decrypting settings fields.
+         *
+         * @param int $form_id The form id to get feeds for.
+         *
+         * @return array Returns an array of feeds for the specified form id.
+         */
         public function get_feeds($form_id = \null)
         {
         }
@@ -11523,6 +12282,7 @@ namespace {
          * Queries and returns all active feeds for this Add-On
          *
          * @since 2.4
+         * @since 2.7.17 Added support for decrypting settings fields.
          *
          * @param int $form_id The Form Id to get feeds from.
          *
@@ -11531,6 +12291,17 @@ namespace {
         public function get_active_feeds($form_id = \null)
         {
         }
+        /**
+         * Gets the feeds for the specified addon slug and form id.
+         *
+         * @since Unknown
+         * @since 2.7.17 Added support for decrypting settings fields.
+         *
+         * @param string $slug The addon slug to get feeds for.
+         * @param int $form_id (optional) The form id to get feeds for. If not specified, all feeds for the specified addon slug will be returned.
+         *
+         * @return array Returns an array of feeds for the specified form id.
+         */
         public function get_feeds_by_slug($slug, $form_id = \null)
         {
         }
@@ -11540,6 +12311,16 @@ namespace {
         public function get_current_feed_id()
         {
         }
+        /**
+         * Gets a feed by its id.
+         *
+         * @since Unknown
+         * @since 2.7.17 Added support for decrypting settings fields.
+         *
+         * @param int $id The feed id.
+         *
+         * @return array Returns the feed array if found, false otherwise.
+         */
         public function get_feed($id)
         {
         }
@@ -11563,6 +12344,17 @@ namespace {
         public function get_single_submission_feed_by_form($form, $entry)
         {
         }
+        /**
+         * Allows the feeds to be filtered before they are processed.
+         *
+         * @since 2.0
+         *
+         * @param false|array $feeds False or an array of feeds for the current form.
+         * @param array       $entry The entry being processed.
+         * @param array       $form  The form the entry and feeds belong to.
+         *
+         * @return false|array
+         */
         public function pre_process_feeds($feeds, $entry, $form)
         {
         }
@@ -11580,13 +12372,48 @@ namespace {
         public function is_unique_feed_name($name, $form_id)
         {
         }
+        /**
+         * Updates the feed meta
+         *
+         * @since  Unknown
+         *
+         * @since 2.7.17 Added support for encrypting of settings fields.
+         *
+         * @param int $id     Feed ID
+         * @param array $meta Feed meta to be updated
+         *
+         * @return bool
+         */
         public function update_feed_meta($id, $meta)
         {
         }
         public function update_feed_active($id, $is_active)
         {
         }
+        /**
+         * Insert a new feed record.
+         *
+         * @since Unknown
+         *
+         * @since 2.7.17 Added support for encrypting settings fields.
+         *
+         * @param int $form_id    Form ID.
+         * @param bool $is_active If the feed is active or not.
+         * @param array $meta     Feed meta
+         *
+         * @return false|int Returns the ID of the newly created feed or false if the feed table does not exist.
+         */
         public function insert_feed($form_id, $is_active, $meta)
+        {
+        }
+        /**
+         * Get the array of feed settings field names that are configured to be encrypted.
+         *
+         * @since  2.7.16
+         *
+         * @return array Returns an array with all field names that are configured to be encrypted.
+         */
+        public function get_fields_to_encrypt()
         {
         }
         public function delete_feed($id)
@@ -11694,6 +12521,19 @@ namespace {
          * @since 2.5
          */
         public function feed_settings_init()
+        {
+        }
+        /**
+         * Returns an array of entry meta fields to be assigned to the JavaScript entry_meta variable used by the feed condition setting.
+         *
+         * @since 2.9
+         *
+         * @param array $form       The form the feed is being created or edited for.
+         * @param array $entry_meta An empty array or the entry meta fields to be assigned to the JavaScript entry_meta variable.
+         *
+         * @return array
+         */
+        public function get_feed_settings_entry_meta($form, $entry_meta = array())
         {
         }
         /**
@@ -12031,8 +12871,13 @@ namespace {
         {
         }
     }
+}
+namespace Gravity_Forms\Gravity_Forms\Async {
     /**
      * Abstract WP_Async_Request class.
+     *
+     * @since 2.2
+     * @since 2.9.8 Namespaced.
      *
      * @abstract
      */
@@ -12091,7 +12936,7 @@ namespace {
         /**
          * Dispatch the async request
          *
-         * @return array|WP_Error
+         * @return array|\WP_Error
          */
         public function dispatch()
         {
@@ -12124,8 +12969,22 @@ namespace {
          * Maybe handle
          *
          * Check for correct nonce and pass to handler.
+         *
+         * @return void|mixed
          */
         public function maybe_handle()
+        {
+        }
+        /**
+         * Should the process exit with wp_die?
+         *
+         * @since 2.9.7
+         *
+         * @param mixed $return What to return if filter says don't die, default is null.
+         *
+         * @return void|mixed
+         */
+        protected function maybe_wp_die($return = null)
         {
         }
         /**
@@ -12139,13 +12998,23 @@ namespace {
     /**
      * Abstract GF_Background_Process class.
      *
+     * Based on WP_Background_Process
+     * https://github.com/A5hleyRich/wp-background-processing/blob/master/classes/wp-background-process.php
+     *
      * @since 2.2
+     * @since 2.9.8 Namespaced.
      *
      * @abstract
      * @extends WP_Async_Request
      */
-    abstract class GF_Background_Process extends \WP_Async_Request
+    abstract class GF_Background_Process extends \Gravity_Forms\Gravity_Forms\Async\WP_Async_Request
     {
+        /**
+         * The default query arg name used for passing the chain ID to new processes.
+         *
+         * @since 2.9.7
+         */
+        const CHAIN_ID_ARG_NAME = 'chain_id';
         /**
          * Action
          *
@@ -12187,20 +13056,45 @@ namespace {
          */
         protected $cron_interval_identifier;
         /**
-         * Query_url
+         * Restrict object instantiation when using unserialize.
          *
-         * @since 2.3
+         * @since 2.9.7
          *
-         * @var string
-         * @access protected
+         * @var bool|array
          */
-        protected $query_url;
+        protected $allowed_batch_data_classes = true;
+        /**
+         * Null or the current batch.
+         *
+         * @since 2.9.4
+         *
+         * @var object|null
+         */
+        protected $current_batch;
+        /**
+         * The status set when process is cancelling.
+         *
+         * @since 2.9.7
+         *
+         * @var int
+         */
+        const STATUS_CANCELLED = 1;
+        /**
+         * The status set when process is paused or pausing.
+         *
+         * @since 2.9.7
+         *
+         * @var int
+         */
+        const STATUS_PAUSED = 2;
         /**
          * Initiate new background process
          *
          * @since 2.2
+         *
+         * @param bool|array $allowed_batch_data_classes Optional. Array of class names that can be unserialized. Default true (any class).
          */
-        public function __construct()
+        public function __construct($allowed_batch_data_classes = true)
         {
         }
         /**
@@ -12210,19 +13104,9 @@ namespace {
          *
          * @access public
          *
-         * @return array|WP_Error
+         * @return array|\WP_Error|false HTTP Response array, WP_Error on failure, or false if not attempted.
          */
         public function dispatch()
-        {
-        }
-        /**
-         * Get the dispatch request arguments.
-         *
-         * @since 2.3-rc-2
-         *
-         * @return array
-         */
-        protected function get_post_args()
         {
         }
         /**
@@ -12241,6 +13125,7 @@ namespace {
          * Save queue
          *
          * @since 2.2
+         * @since 2.9.7 Added timestamps to the data array.
          *
          * @return $this
          */
@@ -12251,6 +13136,7 @@ namespace {
          * Update queue
          *
          * @since 2.2
+         * @since 2.9.7 Added timestamps to the data array.
          *
          * @param string $key Key.
          * @param array  $data Data.
@@ -12261,7 +13147,7 @@ namespace {
         {
         }
         /**
-         * Delete queue
+         * Delete batch from queue.
          *
          * @param string $key Key.
          *
@@ -12271,18 +13157,140 @@ namespace {
         {
         }
         /**
+         * Delete entire job queue.
+         *
+         * @since 2.9.7
+         */
+        public function delete_all()
+        {
+        }
+        /**
+         * Cancel job on next batch.
+         *
+         * @since 2.9.7
+         */
+        public function cancel()
+        {
+        }
+        /**
+         * Has the process been cancelled?
+         *
+         * @since 2.9.7
+         *
+         * @return bool
+         */
+        public function is_cancelled()
+        {
+        }
+        /**
+         * Called when background process has been cancelled.
+         *
+         * @since 2.9.7
+         */
+        protected function cancelled()
+        {
+        }
+        /**
+         * Pause job on next batch.
+         *
+         * @since 2.9.7
+         *
+         * @param bool $set_timestamp Indicates of the timestamp option should be set, so it can be used by the cron healthcheck to automatically resume processing.
+         */
+        public function pause($set_timestamp = false)
+        {
+        }
+        /**
+         * Has the process been paused?
+         *
+         * @since 2.9.7
+         *
+         * @return bool
+         */
+        public function is_paused()
+        {
+        }
+        /**
+         * Called when background process has been paused.
+         *
+         * @since 2.9.7
+         */
+        protected function paused()
+        {
+        }
+        /**
+         * Resume job.
+         *
+         * @since 2.9.7
+         *
+         * @param bool $dispatch Indicates if the Ajax request to trigger processing of the queue should be sent.
+         */
+        public function resume($dispatch = true)
+        {
+        }
+        /**
+         * Called when background process has been resumed.
+         *
+         * @since 2.9.7
+         */
+        protected function resumed()
+        {
+        }
+        /**
+         * Is queued?
+         *
+         * @since 2.9.7
+         *
+         * @return bool
+         */
+        public function is_queued()
+        {
+        }
+        /**
+         * Is the tool currently active, e.g. starting, working, paused or cleaning up?
+         *
+         * @since 2.9.7
+         *
+         * @return bool
+         */
+        public function is_active()
+        {
+        }
+        /**
          * Generate key
          *
          * Generates a unique key based on microtime. Queue items are
          * given a unique key so that they can be merged upon save.
          *
          * @since 2.2
+         * @since 2.9.7 Added the $key param.
          *
-         * @param int $length Length.
+         * @param int    $length Optional max length to trim key to, defaults to 64 characters.
+         * @param string $key    Optional string to append to identifier before hash, defaults to "batch".
          *
          * @return string
          */
-        protected function generate_key($length = 64)
+        protected function generate_key($length = 64, $key = 'batch')
+        {
+        }
+        /**
+         * Get the status key.
+         *
+         * @since 2.9.7
+         *
+         * @return string
+         */
+        protected function get_status_key()
+        {
+        }
+        /**
+         * Get the status value for the process.
+         *
+         * @since 2.9.7
+         *
+         * @return int
+         */
+        protected function get_status()
         {
         }
         /**
@@ -12292,6 +13300,8 @@ namespace {
          * the process is not already running.
          *
          * @since 2.2
+         *
+         * @return void|mixed
          */
         public function maybe_handle()
         {
@@ -12300,6 +13310,7 @@ namespace {
          * Is queue empty
          *
          * @since 2.2
+         * @since 2.9.7 Updated to use get_batch().
          *
          * @return bool
          */
@@ -12313,8 +13324,21 @@ namespace {
          * in a background process.
          *
          * @since 2.2
+         *
+         * @deprecated 2.9.7 Superseded.
+         * @see        is_processing()
          */
         protected function is_process_running()
+        {
+        }
+        /**
+         * Is the background process currently running?
+         *
+         * @since 2.9.7
+         *
+         * @return bool
+         */
+        public function is_processing()
         {
         }
         /**
@@ -12325,8 +13349,10 @@ namespace {
          * defined in the time_exceeded() method.
          *
          * @since 2.2
+         *
+         * @param bool $reset_start_time Optional, default true.
          */
-        protected function lock_process()
+        public function lock_process($reset_start_time = true)
         {
         }
         /**
@@ -12345,10 +13371,61 @@ namespace {
          * Get batch
          *
          * @since 2.2
+         * @since 2.9.7 Updated to use get_batches().
          *
          * @return stdClass Return the first batch from the queue
          */
         protected function get_batch()
+        {
+        }
+        /**
+         * Get batches.
+         *
+         * @since 2.9.7
+         *
+         * @param int $limit Number of batches to return, defaults to all.
+         *
+         * @return array of stdClass
+         */
+        public function get_batches($limit = 0)
+        {
+        }
+        /**
+         * Performs the database query to get the batches.
+         *
+         * @since 2.9.7
+         *
+         * @param string $table      The name of the table containing the batches.
+         * @param string $column     The name of column containing the batch key.
+         * @param string $key_column The name of the column containing the record ID.
+         * @param int    $limit      Number of batches to return.
+         * @param string $key        The prefix used by the batch key.
+         *
+         * @return array|object|stdClass[]|null
+         */
+        protected function get_batches_results($table, $column, $key_column, $limit, $key)
+        {
+        }
+        /**
+         * Sets the current_batch property.
+         *
+         * @since 2.9.4
+         *
+         * @param object|null $batch Null or the batch currently being processed.
+         *
+         * @return void
+         */
+        protected function set_current_batch($batch = null)
+        {
+        }
+        /**
+         * Gets the batch currently being processed.
+         *
+         * @since 2.9.4
+         *
+         * @return object|null
+         */
+        protected function get_current_batch()
         {
         }
         /**
@@ -12358,8 +13435,22 @@ namespace {
          * within server memory and time limit constraints.
          *
          * @since 2.2
+         *
+         * @return void|mixed
          */
         protected function handle()
+        {
+        }
+        /**
+         * Determines if a batch has been updated.
+         *
+         * @since 2.9.7
+         *
+         * @param stdClass $batch The batch object.
+         *
+         * @return bool
+         */
+        protected function has_batch_been_updated($batch)
         {
         }
         /**
@@ -12396,16 +13487,6 @@ namespace {
         {
         }
         /**
-         * Converts a shorthand byte value to an integer byte value.
-         *
-         * @param string $value A (PHP ini) byte value, either shorthand or ordinary.
-         *
-         * @return int An integer byte value.
-         */
-        protected function convert_hr_to_bytes($value)
-        {
-        }
-        /**
          * Time exceeded.
          *
          * @since 2.2
@@ -12430,12 +13511,34 @@ namespace {
         {
         }
         /**
+         * Called when background process has completed.
+         *
+         * @since 2.9.7
+         */
+        protected function completed()
+        {
+        }
+        /**
+         * Get the cron healthcheck interval in minutes.
+         *
+         * Default is 5 minutes, minimum is 1 minute.
+         *
+         * @since 2.9.7
+         *
+         * @return int
+         */
+        public function get_cron_interval()
+        {
+        }
+        /**
          * Schedule cron healthcheck
          *
          * @since 2.2
          *
          * @access public
+         *
          * @param mixed $schedules Schedules.
+         *
          * @return mixed
          */
         public function schedule_cron_healthcheck($schedules)
@@ -12450,6 +13553,16 @@ namespace {
          * @since 2.2
          */
         public function handle_cron_healthcheck()
+        {
+        }
+        /**
+         * Determines if the queue can be resumed based on how long ago it was paused.
+         *
+         * @since 2.9.7
+         *
+         * @return bool
+         */
+        protected function is_pause_expired()
         {
         }
         /**
@@ -12495,7 +13608,7 @@ namespace {
          *
          * @return false|int
          */
-        public function clear_queue($all_blogs_in_network = \false)
+        public function clear_queue($all_blogs_in_network = false)
         {
         }
         /**
@@ -12513,6 +13626,66 @@ namespace {
          * @return mixed
          */
         protected abstract function task($item);
+        /**
+         * Maybe unserialize data, but not if an object.
+         *
+         * @since 2.9.7
+         *
+         * @param mixed      $data            Data to be unserialized.
+         * @param bool|array $allowed_classes Array of class names that can be unserialized.
+         *
+         * @return mixed
+         */
+        protected static function maybe_unserialize($data, $allowed_classes)
+        {
+        }
+        /**
+         * Should any processing continue?
+         *
+         * @since 2.9.7
+         *
+         * @return bool
+         */
+        public function should_continue()
+        {
+        }
+        /**
+         * Get the string used to identify this type of background process.
+         *
+         * @since 2.9.7
+         *
+         * @return string
+         */
+        public function get_identifier()
+        {
+        }
+        /**
+         * Return the current background process chain's ID.
+         *
+         * @since 2.9.7
+         * @since 2.9.8 Added the Ajax request action check.
+         *
+         * If the chain's ID hasn't been set before this function is first used,
+         * and hasn't been passed as a query arg during dispatch,
+         * the chain ID will be generated before being returned.
+         *
+         * @return string
+         */
+        public function get_chain_id()
+        {
+        }
+        /**
+         * Filters the query arguments used during an async request.
+         *
+         * @since 2.9.7
+         *
+         * @param array $args Current query args.
+         *
+         * @return array
+         */
+        public function filter_dispatch_query_args($args)
+        {
+        }
         /**
          * Allows filtering of the form before the task is processed.
          *
@@ -12559,16 +13732,30 @@ namespace {
          *
          * @return bool|int
          */
-        public function delete_batches($all_blogs_in_network = \false)
+        public function delete_batches($all_blogs_in_network = false)
+        {
+        }
+        /**
+         * Writes a message to the core log.
+         *
+         * @since 2.9.7
+         *
+         * @param string $message The message to be logged.
+         *
+         * @return void
+         */
+        public function log_debug($message)
         {
         }
     }
+}
+namespace {
     /**
      * GF_Feed_Processor Class.
      *
      * @since 2.2
      */
-    class GF_Feed_Processor extends \GF_Background_Process
+    class GF_Feed_Processor extends \Gravity_Forms\Gravity_Forms\Async\GF_Background_Process
     {
         /**
          * The action name.
@@ -12591,21 +13778,41 @@ namespace {
         {
         }
         /**
-         * Task
+         * Processes the task.
          *
          * @since  2.2
+         * @since  2.9.4 Updated to use the add-on save_entry_feed_status(), post_process_feed(), and fullfill_entry() methods.
+         *
          * @access protected
          *
-         * Override this method to perform any actions required on each
-         * queue item. Return the modified item for further processing
-         * in the next pass through. Or, return false to remove the
-         * item from the queue.
+         * @param array $item {
+         *     The task arguments.
          *
-         * @param array $item The task arguments: addon, feed, entry_id, and form_id.
+         *     @type string $addon    The add-on class name.
+         *     @type array  $feed     The feed.
+         *     @type int    $entry_id The entry ID.
+         *     @type int    $form_id  The form ID.
+         *     @type int    $attempts The number of attempts. Only included if the task has been processed before.
+         * }
+         *
+         * @return bool|array
+         */
+        protected function task($item)
+        {
+        }
+        /**
+         * Determines if the feed can be processed based on the contents of the processed feeds entry meta.
+         *
+         * @since 2.9.2
+         *
+         * @param array       $entry The entry being processed.
+         * @param array       $feed  The feed queued for processing.
+         * @param array       $form  The form the entry belongs to.
+         * @param GFFeedAddOn $addon The current instance of the add-on the feed belongs to.
          *
          * @return bool
          */
-        protected function task($item)
+        public function can_process_feed($feed, $entry, $form, $addon)
         {
         }
         /**
@@ -12628,6 +13835,24 @@ namespace {
         public function custom_error_handler($number, $string, $file, $line)
         {
         }
+        /**
+         * Increments the item attempts property and updates the batch in the database.
+         *
+         * @since 2.4
+         * @since 2.9.4 Updated to use get_current_branch() instead of making a db request to get the batch.
+         *
+         * @param array $item {
+         *     The task arguments.
+         *
+         *     @type string $addon    The add-on class name.
+         *     @type array  $feed     The feed.
+         *     @type int    $entry_id The entry ID.
+         *     @type int    $form_id  The form ID.
+         *     @type int    $attempts The number of processing attempts. Only included if the task has been processed before.
+         * }
+         *
+         * @return array
+         */
         protected function increment_attempts($item)
         {
         }
@@ -12757,6 +13982,14 @@ namespace {
          * @var bool True if the smallest unit should be used. Otherwise, will include the decimal places.
          */
         protected $_requires_smallest_unit = \false;
+        /**
+         * Out of the box, payment add-ons do not support feed reprocessing.
+         *
+         * @since 2.9.2
+         *
+         * @var bool
+         */
+        protected $_supports_feed_reprocessing = \false;
         //--------- Initialization ----------
         /**
          * Runs before the payment add-on is initialized.
@@ -12878,6 +14111,18 @@ namespace {
         {
         }
         /**
+         * Adds additional relevant information for payment add-ons to the frontend feeds
+         *
+         * @since unknown
+         *
+         * @param array $form The Form object to get Frontend Feeds from.
+         *
+         * @return array An array with feeds eligible to be a Front End Feed, including feed data necessary for payment add-ons.
+         */
+        public function get_frontend_feeds($form)
+        {
+        }
+        /**
          * Override to specify where the "Post Payment Action" setting should appear on the payment add-on feed.
          *
          * @since 2.4.13
@@ -12940,6 +14185,38 @@ namespace {
          * @return array $validation_result
          */
         public function maybe_validate($validation_result, $context = 'api-submit')
+        {
+        }
+        /**
+         * Handle the entry meta conditional logic confirmations. Adds support for the payment_status entry field to the confirmation condition logic setting.
+         *
+         * @since 2.9.1
+         *
+         * @param array $entry_meta      The entry meta.
+         * @param array $form            The form object.
+         * @param int   $confirmation_id The confirmation ID.
+         *
+         * @return array Returns the entry meta, with the payment_status field added to it.
+         */
+        public function maybe_add_payment_status_to_meta($entry_meta, $form)
+        {
+        }
+        /**
+         * Returns the payment statuses that can be used in conditional logic. Override this function to add support for payment statuses in conditional logic.
+         * Example:
+         * return array(
+         *    'Paid' => __( 'Paid', 'gravityforms' ),
+         *    'Failed' => __( 'Failed', 'gravityforms' ),
+         *    'Processing' => __( 'Processing', 'gravityforms' ),
+         * );
+         *
+         * @since 2.9.1
+         *
+         * @param array $form The form object.
+         *
+         * @return array Return an array with the payment statuses that can be used in conditional logic. Return an empty array to disable this feature.
+         */
+        public function get_conditional_logic_payment_statuses($form)
         {
         }
         /**
@@ -13564,6 +14841,19 @@ namespace {
         }
         //--------- Feed Settings ----------------
         /**
+         * Returning an empty array because payment feed logic is evaluated before entry meta is saved.
+         *
+         * @since 2.9
+         *
+         * @param array $form       The form the feed is being created or edited for.
+         * @param array $entry_meta An empty array or the entry meta fields to be assigned to the JavaScript entry_meta variable.
+         *
+         * @return array
+         */
+        public function get_feed_settings_entry_meta($form, $entry_meta = array())
+        {
+        }
+        /**
          * Remove the add new button from the title if the form requires a credit card field.
          *
          * @return string
@@ -13989,6 +15279,400 @@ namespace {
         {
         }
     }
+}
+namespace Gravity_Forms\Gravity_Forms\Ajax {
+    /**
+     * Class GF_Ajax_Handler
+     *
+     * @since 2.9.0
+     *
+     * Provides functionality for handling AJAX validation and submission.
+     */
+    class GF_Ajax_Handler
+    {
+        /**
+         * Handles the form validation AJAX requests. Uses the global $_POST array and sends the form validation result as a JSON response.
+         *
+         * @since 2.9.0
+         */
+        public function validate_form()
+        {
+        }
+        /**
+         * Handles the form submission AJAX requests. Uses the global $_POST array and sends the form submission result as a JSON response.
+         *
+         * @since 2.9.0
+         */
+        public function submit_form()
+        {
+        }
+        /**
+         * Returns the submission type based on the target and source page numbers.
+         *
+         * @since 2.9.7
+         *
+         * @param int $target_page The target page number.
+         * @param int $source_page The source page number.
+         *
+         * @return string The submission type. Possible values are SUBMISSION_TYPE_SUBMIT, SUBMISSION_TYPE_NEXT, SUBMISSION_TYPE_PREVIOUS, and SUBMISSION_TYPE_SAVE_AND_CONTINUE.
+         */
+        public function get_submission_type($target_page, $source_page)
+        {
+        }
+        /**
+         * Handles the save link submission. Uses the $_POST array and sends the save link result as a JSON response.
+         *
+         * @since 2.9.0
+         *
+         * @return void
+         */
+        public function submit_save_link()
+        {
+        }
+        /**
+         * Filters the lifespan of the nonce used for AJAX submissions and validation.
+         *
+         * @since 2.9.0
+         *
+         * @param int    $lifespan_in_seconds The lifespan of the nonce in seconds. Defaults to 3 days
+         * @param string $action              The nonce action (gform_ajax_submission or gform_ajax_validation).
+         *
+         * @return int The filtered lifespan of the nonce in seconds.
+         */
+        public function nonce_life($lifespan_in_seconds, $action = '')
+        {
+        }
+    }
+}
+namespace Gravity_Forms\Gravity_Forms {
+    /**
+     * Class GF_Service_Provider
+     *
+     * An abstraction which provides a contract for defining Service Providers. Service Providers facilitate
+     * organizing Services into discreet modules, as opposed to having to register each service in a single location.
+     *
+     * @since 2.5
+     *
+     * @package Gravity_Forms\Gravity_Forms
+     */
+    abstract class GF_Service_Provider
+    {
+        /**
+         * @var GF_Service_Container $container
+         */
+        protected $container;
+        public function set_container(\Gravity_Forms\Gravity_Forms\GF_Service_Container $container)
+        {
+        }
+        /**
+         * Register new services to the Service Container.
+         *
+         * @param GF_Service_Container $container
+         *
+         * @return void
+         */
+        public abstract function register(\Gravity_Forms\Gravity_Forms\GF_Service_Container $container);
+        /**
+         * Noop by default - used to initialize hooks and filters for the given module.
+         */
+        public function init(\Gravity_Forms\Gravity_Forms\GF_Service_Container $container)
+        {
+        }
+        //----------------------------------------
+        //---------- App Registration ------------
+        //----------------------------------------
+        /**
+         * Register a JS app with the given arguments.
+         *
+         * @since 2.7.1
+         *
+         * @param array $args
+         */
+        public function register_app($args)
+        {
+        }
+        /**
+         * Enqueue the CSS assets for the app.
+         *
+         * @since 2.7.1
+         *
+         * @param $args
+         */
+        protected function enqueue_app_css($args)
+        {
+        }
+        /**
+         * Add the root element to the footer output for bootstrapping.
+         *
+         * @since 2.7.1
+         *
+         * @param string $root
+         */
+        protected function add_root_element($root)
+        {
+        }
+    }
+}
+namespace Gravity_Forms\Gravity_Forms\Ajax {
+    /**
+     * Class GF_Ajax_Service_Provider
+     *
+     * Service provider for the Ajax Service.
+     */
+    class GF_Ajax_Service_Provider extends \Gravity_Forms\Gravity_Forms\GF_Service_Provider
+    {
+        const GF_AJAX_HANDLER = 'gf_ajax_handler';
+        const GF_AJAX_CONFIG = 'gf_ajax_config';
+        /**
+         * Includes all related files and adds all containers.
+         *
+         * @param GF_Service_Container $container Container singleton object.
+         */
+        public function register(\Gravity_Forms\Gravity_Forms\GF_Service_Container $container)
+        {
+        }
+        /**
+         * Initializes service.
+         *
+         * @param GF_Service_Container $container Service Container.
+         */
+        public function init(\Gravity_Forms\Gravity_Forms\GF_Service_Container $container)
+        {
+        }
+    }
+}
+namespace Gravity_Forms\Gravity_Forms\Config {
+    /**
+     * Base class for providing advanced functionality when localizing Config Data
+     * for usage in Javascript.
+     *
+     * @since   2.6
+     *
+     * @package Gravity_Forms\Gravity_Forms\Config
+     */
+    abstract class GF_Config
+    {
+        /**
+         * The Data Parser
+         *
+         * @since 2.6
+         *
+         * @var GF_Config_Data_Parser
+         */
+        protected $parser;
+        /**
+         * The data for this config object.
+         *
+         * @since 2.6
+         *
+         * @var array
+         */
+        protected $data;
+        /**
+         * The object name for this config.
+         *
+         * @since 2.6
+         *
+         * @var string
+         */
+        protected $name;
+        /**
+         * The ID of the script to localize the data to.
+         *
+         * @since 2.6
+         *
+         * @var string
+         */
+        protected $script_to_localize;
+        /**
+         * The priority of this config - can be used to control the order in
+         * which configs are processed in the Collection.
+         *
+         * @since 2.6
+         *
+         * @var int
+         */
+        protected $priority = 0;
+        /**
+         * Whether the config should enqueue it's data. Can also be handled by overriding the
+         * ::should_enqueue() method.
+         *
+         * @since 2.6
+         *
+         * @var bool
+         */
+        protected $should_enqueue = true;
+        /**
+         * Whether this config should overwrite previous values in the object.
+         *
+         * If set to "true", the object will be overwritten by the values provided here.
+         * If set to "false", the object will have its values merged with those defined here, recursively.
+         *
+         * @since 2.6
+         *
+         * @var bool
+         */
+        protected $overwrite = false;
+        /**
+         * An args array. Use in the data() method to retrieve data specific to the specified args. For example, form specific configs will have an array of form ids specified in args.
+         *
+         * @var array
+         */
+        protected $args = array();
+        /**
+         * Constructor
+         *
+         * @param GF_Config_Data_Parser $parser
+         */
+        public function __construct(\Gravity_Forms\Gravity_Forms\Config\GF_Config_Data_Parser $parser)
+        {
+        }
+        /**
+         * Method to handle defining the data array for this config.
+         *
+         * @since 2.6
+         *
+         * @return array
+         */
+        protected abstract function data();
+        /**
+         * Override this method to add enable ajax loading for a specific config path.
+         * To enable loading data() via ajax, check if $config_path is one of the paths that are provided by the config. If so, return true.
+         *
+         * Example:
+         * public function enable_ajax( $config_path, $args ) {
+         *    return str_starts_with( $config_path, 'gform_theme_config/common/form/product_meta' );
+         * }
+         *
+         * @since 2.9.0
+         *
+         * @param string $config_path The full path to the config item when stored in the browser's window object, for example: "gform_theme_config/common/form/product_meta"
+         * @param array  $args        The args used to load the config data. This will be empty for generic config items. For form specific items will be in the format: array( 'form_ids' => array(123,222) ).
+         *
+         * @return bool Return true to load the config data associated with the provided $config_path. Return false otherwise.
+         */
+        public function enable_ajax($config_path, $args)
+        {
+        }
+        /**
+         * Determine if the config should enqueue its data. If should_enqueue() is a method,
+         * call it and return the result. If not, simply return the (boolean) value of the property.
+         *
+         * @since 2.6
+         *
+         * @return bool
+         */
+        public function should_enqueue()
+        {
+        }
+        /**
+         * Get the data for the config, passing it through a filter.
+         *
+         * @since 2.6
+         *
+         * @return array
+         */
+        public function get_data()
+        {
+        }
+        /**
+         * Get the name of the config's object.
+         *
+         * @since 2.6
+         *
+         * @return string
+         */
+        public function name()
+        {
+        }
+        /**
+         * Get the $priority for the config.
+         *
+         * @since 2.6
+         *
+         * @return int
+         */
+        public function priority()
+        {
+        }
+        /**
+         * Get the script to localize.
+         *
+         * @since 2.6
+         *
+         * @return string
+         */
+        public function script_to_localize()
+        {
+        }
+        /**
+         * Get whether the config should override previous values.
+         *
+         * @since 2.6
+         *
+         * @return bool
+         */
+        public function should_overwrite()
+        {
+        }
+        /**
+         * Sets the $form_ids arrays.
+         *
+         * @since 2.9.0
+         *
+         * @param array $args Args array to be set
+         *
+         * @return void
+         */
+        public function set_args($args)
+        {
+        }
+        /**
+         * Validates the config data against a hash to ensure it has not been tampered with.
+         * This method is called via AJAX, initiated by the gform.config.isValid() JS method.
+         *
+         * @since 2.9.0
+         *
+         * @return void
+         */
+        public static function validate_ajax()
+        {
+        }
+        /**
+         * Hashes the config data.
+         *
+         * @since 2.9.0
+         *
+         * @param array $config
+         *
+         * @return string Returns the hash of the config data.
+         */
+        public static function hash($config)
+        {
+        }
+    }
+}
+namespace Gravity_Forms\Gravity_Forms\Ajax\Config {
+    /**
+     * Config items for Ajax operations
+     *
+     * @since 2.9.0
+     */
+    class GF_Ajax_Config extends \Gravity_Forms\Gravity_Forms\Config\GF_Config
+    {
+        protected $name = 'gform_theme_config';
+        protected $script_to_localize = 'gform_gravityforms_theme';
+        /**
+         * Config data.
+         *
+         * @return array[]
+         */
+        public function data()
+        {
+        }
+    }
+}
+namespace {
     /**
      * API for standard Gravity Forms functionality.
      *
@@ -14161,7 +15845,7 @@ namespace {
          *
          * @return array|WP_Error Either an array of new form IDs or a WP_Error instance.
          */
-        public static function add_forms($forms)
+        public static function add_forms($forms, $continue_on_error = \false)
         {
         }
         /**
@@ -14556,22 +16240,18 @@ namespace {
          * 'resume_token' => string '045f941cc4c04d479556bab1db6d3495'
          *
          * @since  Unknown
-         * @access public
+         * @since  2.9.9 Added the optional $initiated_by param.
          *
-         * @uses GFAPI::get_form()
-         * @uses GFCommon::get_base_path()
-         * @uses GFFormDisplay::process_form()
-         * @uses GFFormDisplay::replace_save_variables()
-         *
-         * @param int $form_id The Form ID
-         * @param array $input_values An array of values. Not $_POST, that will be automatically merged with the $input_values.
-         * @param array $field_values Optional.
-         * @param int $target_page Optional.
-         * @param int $source_page Optional.
+         * @param int      $form_id      The Form ID
+         * @param array    $input_values An array of values. Not $_POST, that will be automatically merged with the $input_values.
+         * @param array    $field_values Optional. An array of dynamic population parameter keys with their corresponding values used to populate the fields.
+         * @param int      $target_page  Optional. For multi-page forms to indicate which page is to be loaded if the current page passes validation. Default is 0, indicating the last or only page is being submitted.
+         * @param int      $source_page  Optional. For multi-page forms to indicate which page of the form was just submitted. Default is 1.
+         * @param null|int $initiated_by Optional. The process that initiated the submission. Supported integers are 1 (aka GFFormDisplay::SUBMISSION_INITIATED_BY_WEBFORM) or 2 (aka GFFormDisplay::SUBMISSION_INITIATED_BY_API). Defaults to GFFormDisplay::SUBMISSION_INITIATED_BY_API.
          *
          * @return array|WP_Error An array containing the result of the submission.
          */
-        public static function submit_form($form_id, $input_values, $field_values = array(), $target_page = 0, $source_page = 1)
+        public static function submit_form($form_id, $input_values, $field_values = array(), $target_page = 0, $source_page = 1, $initiated_by = \null)
         {
         }
         /**
@@ -14625,6 +16305,7 @@ namespace {
          * @since 1.8
          * @since 2.4.24 Updated $is_active to support using null to return both active and inactive feeds.
          * @since 2.6.1  Updated $form_ids to support an array of IDs.
+         * @since 2.7.17 Added support for decrypting settings fields.
          *
          * @param mixed          $feed_ids   The ID of the Feed or an array of Feed IDs.
          * @param null|int|int[] $form_ids   The ID of the Form to which the Feeds belong or array of Form IDs.
@@ -14634,6 +16315,41 @@ namespace {
          * @return array|WP_Error Either an array of Feed objects or a WP_Error instance.
          */
         public static function get_feeds($feed_ids = \null, $form_ids = \null, $addon_slug = \null, $is_active = \true)
+        {
+        }
+        /**
+         * Encrypts feed meta fields based on feed settings fields configuratino and returns the resulting feed meta array.
+         *
+         * @since 2.7.17
+         *
+         * @param array  $feed_meta  The feed meta array to encrypt.
+         * @param string $addon_slug The slug of the add-on to which the feed belongs.
+         *
+         * @return array Returns the feed meta arra with the fields that should be encrypted.
+         */
+        public static function encrypt_feed_meta($feed_meta, $addon_slug)
+        {
+        }
+        /**
+         * Gets the encryption service object.
+         *
+         * @since 2.7.17
+         *
+         * @return \Gravity_Forms\Gravity_Forms\Settings\GF_Settings_Encryption An instance of the encryption service object.
+         */
+        public static function get_encryptor()
+        {
+        }
+        /**
+         * Sets the encryption service object to be used by GFAPI
+         *
+         * @since 2.7.17
+         *
+         * @param Gravity_Forms\Gravity_Forms\Settings\GF_Settings_Encryption $encryptor The encryption service object to be used.
+         *
+         * @return void
+         */
+        public static function set_encryptor($encryptor)
         {
         }
         /**
@@ -14665,6 +16381,9 @@ namespace {
         /**
          * Updates a feed.
          *
+         * @since Unknown
+         * @since 2.7.17 Added support for encrypting settings fields.
+         *
          * @param int   $feed_id   The ID of the feed being updated.
          * @param array $feed_meta The feed meta to replace the existing feed meta.
          * @param null  $form_id   The ID of the form that the feed is associated with
@@ -14678,6 +16397,8 @@ namespace {
          * Adds a feed with the given Feed object.
          *
          * @since  1.8
+         * @since 2.7.17 Added support for encrypting settings fields.
+         *
          * @access public
          * @global $wpdb
          *
@@ -14702,6 +16423,99 @@ namespace {
          * @return bool|WP_Error
          */
         public static function update_feed_property($feed_id, $property_name, $property_value)
+        {
+        }
+        /**
+         * Triggers processing of non-payment add-on feeds for the given entry.
+         *
+         * @since 2.9.2
+         *
+         * @param array  $entry      The entry to be processed.
+         * @param array  $form       The form the entry belongs to.
+         * @param string $addon_slug A specific add-on slug, or an empty string for all non-payment add-on feeds to be processed.
+         * @param bool   $reset_meta Indicates if the processed feeds meta for the entry should be reset.
+         *
+         * @return false|array
+         */
+        public static function maybe_process_feeds($entry, $form, $addon_slug = '', $reset_meta = \false)
+        {
+        }
+        /**
+         * Returns the processed feeds meta for the specified entry.
+         *
+         * @since 2.9.2
+         *
+         * @param int    $entry_id   The ID of the entry the meta is to be retrieved for.
+         * @param string $addon_slug An add-on slug to return the IDs for a specific add-on or an empty string to return the meta for all add-ons.
+         *
+         * @return array
+         */
+        public static function get_processed_feeds_meta($entry_id, $addon_slug = '')
+        {
+        }
+        /**
+         * Updates or deletes the processed feeds meta for the specified entry.
+         *
+         * @since 2.9.2
+         *
+         * @param int            $entry_id   The ID of the entry the meta is to be updated for.
+         * @param string         $addon_slug An add-on slug when updating the meta for a specific add-on or an empty string to update the meta for all add-ons.
+         * @param int|array|null $value      The ID of a processed feed for a specific add-on, an array of processed feed IDs for a specific add-on, an array using add-on slugs as the keys to arrays of processed feed IDs, or null to clear the meta.
+         * @param null|int       $form_id    The form ID of the entry (optional, saves extra query if passed when creating the metadata).
+         *
+         * @return void
+         */
+        public static function update_processed_feeds_meta($entry_id, $addon_slug, $value, $form_id = \null)
+        {
+        }
+        /**
+         * Returns the key used when saving/retrieving the feed status entry meta.
+         *
+         * @since 2.9.4
+         *
+         * @param int $feed_id The feed ID.
+         *
+         * @return string
+         */
+        public static function get_entry_feed_status_key($feed_id)
+        {
+        }
+        /**
+         * Retrieves the feed processing status for the specified entry from the "feed_{$feed_id}_status" meta.
+         *
+         * @since 2.9.4
+         *
+         * @param int  $entry_id              The entry ID.
+         * @param int  $feed_id               The feed ID.
+         * @param bool $return_latest         Indicates if only the latest attempt should be returned. Default is to return all attempts.
+         * @param bool $return_latest_details Indicates if the details array of the latest attempt should be returned instead of just the status string.
+         *
+         * @return array|string
+         */
+        public static function get_entry_feed_status($entry_id, $feed_id, $return_latest = \false, $return_latest_details = \false)
+        {
+        }
+        /**
+         * Updates or deletes the "feed_{$feed_id}_status" meta for the specified entry.
+         *
+         * @since 2.9.4
+         *
+         * @param int        $entry_id The entry ID.
+         * @param int        $feed_id  The feed ID.
+         * @param array|null $status   {
+         *     The status array to be appended to the metadata or null to delete the metadata.
+         *
+         *     @type int        $timestamp The timestamp for the feed processing attempt.
+         *     @type string     $status    The status: success or failed.
+         *     @type int|string $code      The error code.
+         *     @type string     $message   The error message.
+         *     @type mixed      $data      Additional data relating to the error.
+         * }
+         * @param null|int   $form_id  The form ID of the entry (optional, saves extra query if passed when creating the metadata).
+         *
+         * @return void
+         */
+        public static function update_entry_feed_status($entry_id, $feed_id, $status, $form_id = \null)
         {
         }
         // NOTIFICATIONS ----------------------------------------------
@@ -14994,77 +16808,6 @@ namespace Gravity_Forms\Gravity_Forms\Assets {
         {
         }
     }
-}
-namespace Gravity_Forms\Gravity_Forms {
-    /**
-     * Class GF_Service_Provider
-     *
-     * An abstraction which provides a contract for defining Service Providers. Service Providers facilitate
-     * organizing Services into discreet modules, as opposed to having to register each service in a single location.
-     *
-     * @since 2.5
-     *
-     * @package Gravity_Forms\Gravity_Forms
-     */
-    abstract class GF_Service_Provider
-    {
-        /**
-         * @var GF_Service_Container $container
-         */
-        protected $container;
-        public function set_container(\Gravity_Forms\Gravity_Forms\GF_Service_Container $container)
-        {
-        }
-        /**
-         * Register new services to the Service Container.
-         *
-         * @param GF_Service_Container $container
-         *
-         * @return void
-         */
-        public abstract function register(\Gravity_Forms\Gravity_Forms\GF_Service_Container $container);
-        /**
-         * Noop by default - used to initialize hooks and filters for the given module.
-         */
-        public function init(\Gravity_Forms\Gravity_Forms\GF_Service_Container $container)
-        {
-        }
-        //----------------------------------------
-        //---------- App Registration ------------
-        //----------------------------------------
-        /**
-         * Register a JS app with the given arguments.
-         *
-         * @since 2.7.1
-         *
-         * @param array $args
-         */
-        public function register_app($args)
-        {
-        }
-        /**
-         * Enqueue the CSS assets for the app.
-         *
-         * @since 2.7.1
-         *
-         * @param $args
-         */
-        protected function enqueue_app_css($args)
-        {
-        }
-        /**
-         * Add the root element to the footer output for bootstrapping.
-         *
-         * @since 2.7.1
-         *
-         * @param string $root
-         */
-        protected function add_root_element($root)
-        {
-        }
-    }
-}
-namespace Gravity_Forms\Gravity_Forms\Assets {
     /**
      * Class GF_Asset_Service_Provider
      *
@@ -15278,7 +17021,7 @@ namespace Gravity_Forms\Gravity_Forms\Async {
      *
      * @since 2.6.9
      */
-    class GF_Notifications_Processor extends \GF_Background_Process
+    class GF_Notifications_Processor extends \Gravity_Forms\Gravity_Forms\Async\GF_Background_Process
     {
         /**
          * The action name.
@@ -15736,157 +17479,6 @@ namespace {
         }
     }
 }
-namespace Gravity_Forms\Gravity_Forms\Config {
-    /**
-     * Base class for providing advanced functionality when localizing Config Data
-     * for usage in Javascript.
-     *
-     * @since   2.6
-     *
-     * @package Gravity_Forms\Gravity_Forms\Config
-     */
-    abstract class GF_Config
-    {
-        /**
-         * The Data Parser
-         *
-         * @since 2.6
-         *
-         * @var GF_Config_Data_Parser
-         */
-        protected $parser;
-        /**
-         * The data for this config object.
-         *
-         * @since 2.6
-         *
-         * @var array
-         */
-        protected $data;
-        /**
-         * The object name for this config.
-         *
-         * @since 2.6
-         *
-         * @var string
-         */
-        protected $name;
-        /**
-         * The ID of the script to localize the data to.
-         *
-         * @since 2.6
-         *
-         * @var string
-         */
-        protected $script_to_localize;
-        /**
-         * The priority of this config - can be used to control the order in
-         * which configs are processed in the Collection.
-         *
-         * @since 2.6
-         *
-         * @var int
-         */
-        protected $priority = 0;
-        /**
-         * Whether the config should enqueue it's data. Can also be handled by overriding the
-         * ::should_enqueue() method.
-         *
-         * @since 2.6
-         *
-         * @var bool
-         */
-        protected $should_enqueue = true;
-        /**
-         * Whether this config should overwrite previous values in the object.
-         *
-         * If set to "true", the object will be overwritten by the values provided here.
-         * If set to "false", the object will have its values merged with those defined here, recursively.
-         *
-         * @since 2.6
-         *
-         * @var bool
-         */
-        protected $overwrite = false;
-        /**
-         * Constructor
-         *
-         * @param GF_Config_Data_Parser $parser
-         */
-        public function __construct(\Gravity_Forms\Gravity_Forms\Config\GF_Config_Data_Parser $parser)
-        {
-        }
-        /**
-         * Method to handle defining the data array for this config.
-         *
-         * @since 2.6
-         *
-         * @return array
-         */
-        protected abstract function data();
-        /**
-         * Determine if the config should enqueue its data. If should_enqueue() is a method,
-         * call it and return the result. If not, simply return the (boolean) value of the property.
-         *
-         * @since 2.6
-         *
-         * @return bool
-         */
-        public function should_enqueue()
-        {
-        }
-        /**
-         * Get the data for the config, passing it through a filter.
-         *
-         * @since 2.6
-         *
-         * @return array
-         */
-        public function get_data()
-        {
-        }
-        /**
-         * Get the name of the config's object.
-         *
-         * @since 2.6
-         *
-         * @return string
-         */
-        public function name()
-        {
-        }
-        /**
-         * Get the $priority for the config.
-         *
-         * @since 2.6
-         *
-         * @return int
-         */
-        public function priority()
-        {
-        }
-        /**
-         * Get the script to localize.
-         *
-         * @since 2.6
-         *
-         * @return string
-         */
-        public function script_to_localize()
-        {
-        }
-        /**
-         * Get whether the config should override previous values.
-         *
-         * @since 2.6
-         *
-         * @return bool
-         */
-        public function should_overwrite()
-        {
-        }
-    }
-}
 namespace Gravity_Forms\Gravity_Forms\Blocks\Config {
     /**
      * Config items for Blocks.
@@ -16195,7 +17787,7 @@ namespace {
     /**
      * GF_Background_Upgrader Class.
      */
-    class GF_Background_Upgrader extends \GF_Background_Process
+    class GF_Background_Upgrader extends \Gravity_Forms\Gravity_Forms\Async\GF_Background_Process
     {
         /**
          * @var string
@@ -17509,7 +19101,10 @@ namespace Gravity_Forms\Gravity_Forms\Config {
          *
          * @return array
          */
-        public function handle($localize = true)
+        public function handle($localize = true, $args = null)
+        {
+        }
+        public function handle_ajax()
         {
         }
         /**
@@ -17561,11 +19156,10 @@ namespace Gravity_Forms\Gravity_Forms\Config {
         const DATA_PARSER = 'data_parser';
         // Config services
         const I18N_CONFIG = 'i18n_config';
-        const I18N_ADMIN_CONFIG = 'i18n_admin_config';
+        const ADMIN_CONFIG = 'admin_config';
         const LEGACY_CONFIG = 'legacy_config';
         const LEGACY_MULTI_CONFIG = 'legacy_multi_config';
         const MULTIFILE_CONFIG = 'multifile_config';
-        const BLOCK_EDITOR_CONFIG = 'block_editor_config';
         const GLOBAL_CONFIG = 'global_config';
         /**
          * Array mapping config class names to their container ID.
@@ -17574,7 +19168,7 @@ namespace Gravity_Forms\Gravity_Forms\Config {
          *
          * @var string[]
          */
-        protected $configs = array(self::I18N_CONFIG => \Gravity_Forms\Gravity_Forms\Config\Items\GF_Config_I18n::class, self::I18N_ADMIN_CONFIG => \Gravity_Forms\Gravity_Forms\Config\Items\GF_Config_Admin_I18n::class, self::LEGACY_CONFIG => \Gravity_Forms\Gravity_Forms\Config\Items\GF_Config_Legacy_Check::class, self::LEGACY_MULTI_CONFIG => \Gravity_Forms\Gravity_Forms\Config\Items\GF_Config_Legacy_Check_Multi::class, self::MULTIFILE_CONFIG => \Gravity_Forms\Gravity_Forms\Config\Items\GF_Config_Multifile::class, self::BLOCK_EDITOR_CONFIG => \Gravity_Forms\Gravity_Forms\Config\Items\GF_Config_Block_Editor::class);
+        protected $configs = array(self::I18N_CONFIG => \Gravity_Forms\Gravity_Forms\Config\Items\GF_Config_I18n::class, self::ADMIN_CONFIG => \Gravity_Forms\Gravity_Forms\Config\Items\GF_Config_Admin::class, self::LEGACY_CONFIG => \Gravity_Forms\Gravity_Forms\Config\Items\GF_Config_Legacy_Check::class, self::LEGACY_MULTI_CONFIG => \Gravity_Forms\Gravity_Forms\Config\Items\GF_Config_Legacy_Check_Multi::class, self::MULTIFILE_CONFIG => \Gravity_Forms\Gravity_Forms\Config\Items\GF_Config_Multifile::class);
         /**
          * Register services to the container.
          *
@@ -17640,9 +19234,9 @@ namespace Gravity_Forms\Gravity_Forms\Config\Items {
      *
      * @since 2.6
      */
-    class GF_Config_Admin_I18n extends \Gravity_Forms\Gravity_Forms\Config\GF_Config
+    class GF_Config_Admin extends \Gravity_Forms\Gravity_Forms\Config\GF_Config
     {
-        protected $name = 'gform_admin_i18n';
+        protected $name = 'gform_admin_config';
         protected $script_to_localize = 'gform_gravityforms_admin_vendors';
         /**
          * Whether we should enqueue this data.
@@ -17654,24 +19248,6 @@ namespace Gravity_Forms\Gravity_Forms\Config\Items {
         public function should_enqueue()
         {
         }
-        /**
-         * Config data.
-         *
-         * @return array[]
-         */
-        public function data()
-        {
-        }
-    }
-    /**
-     * Config items for the Block Editor.
-     *
-     * @since 2.6
-     */
-    class GF_Config_Block_Editor extends \Gravity_Forms\Gravity_Forms\Config\GF_Config
-    {
-        protected $name = 'gform_admin_config';
-        protected $script_to_localize = 'gform_gravityforms_admin_vendors';
         /**
          * Config data.
          *
@@ -18662,6 +20238,16 @@ namespace {
         {
         }
         /**
+         * Whether the choice field has entries that persist after changing the field type.
+         *
+         * @since 2.9
+         *
+         * @return boolean
+         */
+        public function has_persistent_choices()
+        {
+        }
+        /**
          * Whether or not an offset exists.
          *
          * @since 1.9
@@ -18810,6 +20396,18 @@ namespace {
          * @return string
          */
         public function get_form_editor_field_icon()
+        {
+        }
+        /**
+         * Returns the form editor icon for the field type.
+         *
+         * Sometimes the field type and the input type are not the same, but we want the field type icon.
+         *
+         * @since 2.9.0
+         *
+         * @return string
+         */
+        public function get_form_editor_field_type_icon()
         {
         }
         /**
@@ -18997,6 +20595,30 @@ namespace {
          * @return bool
          */
         public function is_value_submission_array()
+        {
+        }
+        /**
+         * Returns the input ID given the choice key for Multiple Choice and Image Choice fields.
+         *
+         * @since 2.9
+         *
+         * @param string $key The choice key.
+         *
+         * @return string
+         */
+        public function get_input_id_from_choice_key($key)
+        {
+        }
+        /**
+         * Returns the choice ID given the input key for Multiple Choice and Image Choice fields.
+         *
+         * @since 2.9
+         *
+         * @param string $key The choice key.
+         *
+         * @return string
+         */
+        public function get_choice_id_from_input_key($key)
         {
         }
         /**
@@ -20211,6 +21833,18 @@ namespace {
         public function __construct($data = array())
         {
         }
+        /**
+         * Add recaptcha response to the AJAX request result.
+         *
+         * @since 2.9.0
+         *
+         * @param array $result The result of the AJAX validation and submission request.
+         *
+         * @return mixed
+         */
+        public static function set_recaptcha_response($result)
+        {
+        }
         public function get_form_editor_field_title()
         {
         }
@@ -20293,6 +21927,22 @@ namespace {
         {
         }
         /**
+         * Verifies that the decoded response meets the requirements for submitting the form.
+         *
+         * Returns false if the decoded response doesn't exist or the reCAPTCHA field is on the last page, as we'll want
+         * regular validation at that point instead.
+         *
+         * @since 2.4.24
+         *
+         * @param array  $form     The form data.
+         * @param string $response The encoded response to verify.
+         *
+         * @return bool
+         */
+        public function verify_decoded_response($form, $response)
+        {
+        }
+        /**
          * Get the saved site key.
          *
          * @since 2.4.24
@@ -20313,6 +21963,23 @@ namespace {
         {
         }
         /**
+         * Get the value of the reCAPTCHA response input.
+         *
+         * When user clicks on the "I'm not a robot" box, the response token is populated into a hidden field by Google.
+         * If the current form is a multi-page form and the reCAPTCHA field is on a page other than the last page, this
+         * value will return an openssl encoded string with the Google reCAPTCHA validation data and some supplemental
+         * validation data instead.
+         *
+         * @see GF_Field_CAPTCHA::get_encoded_recaptcha_response()
+         *
+         * @since 2.4.24
+         *
+         * @return string
+         */
+        public function get_posted_recaptcha_response()
+        {
+        }
+        /**
          * Validate the reCAPTCHA token provided by Google.
          *
          * @since unknown
@@ -20326,6 +21993,19 @@ namespace {
         {
         }
         public function get_field_input($form, $value = '', $entry = \null)
+        {
+        }
+        /**
+         * Encode the reCAPTCHA response with details from Google.
+         *
+         * @since 2.4.24
+         *
+         * @param array  $form     The form data.
+         * @param string $response The posted response data.
+         *
+         * @return string
+         */
+        public function get_encoded_recaptcha_response($form, $response)
         {
         }
         public function get_captcha()
@@ -20426,6 +22106,9 @@ namespace {
         public function get_field_container_tag($form)
         {
         }
+        public function get_default_properties()
+        {
+        }
         /**
          * Returns the field inner markup.
          *
@@ -20440,6 +22123,29 @@ namespace {
          * @return string
          */
         public function get_field_input($form, $value = '', $entry = \null)
+        {
+        }
+        public function get_button_markup($value, $entry)
+        {
+        }
+        /**
+         * Get the message that describes the choice limit.
+         *
+         * @since 2.9.0
+         *
+         * @return string
+         */
+        public function get_limit_message()
+        {
+        }
+        /**
+         * Get the text of the choice limit message, or return false if there is no limit.
+         *
+         * @since 2.9.0
+         *
+         * @return false|string
+         */
+        public function get_limit_message_text()
         {
         }
         /**
@@ -20472,6 +22178,9 @@ namespace {
          * @return array|string
          */
         public function get_value_submission($field_values, $get_from_post_global_var = \true)
+        {
+        }
+        public function validate($value, $form)
         {
         }
         // # ENTRY RELATED --------------------------------------------------------------------------------------------------
@@ -20575,6 +22284,16 @@ namespace {
         {
         }
         /**
+         * Return the entry inputs in the order they are configured in the form editor.
+         *
+         * @since  2.9
+         *
+         * @return array|null
+         */
+        public function get_entry_inputs()
+        {
+        }
+        /**
          * Format the entry value before it is used in entry exports and by framework add-ons using GFAddOn::get_field_value().
          *
          * @since  Unknown
@@ -20615,6 +22334,23 @@ namespace {
          * @return string
          */
         public function get_checkbox_choices($value, $disabled_text, $form_id = 0)
+        {
+        }
+        public function get_checked_attribute($choice, $value, $input_id, $form_id)
+        {
+        }
+        /**
+         * Get the aria-describedby attribute for the first choice.
+         *
+         * @since  2.9.0
+         * @access public
+         *
+         * @param int $form_id The current form ID.
+         * @param array $describedby Additional describedby attribute value.
+         *
+         * @return string
+         */
+        public function get_choice_aria_describedby($form_id, $describedby = array())
         {
         }
         /**
@@ -22001,6 +23737,184 @@ namespace {
         {
         }
         public function do_shortcode($content)
+        {
+        }
+    }
+    class GF_Field_Multiple_Choice extends \GF_Field
+    {
+        public $type = 'multi_choice';
+        public function get_form_editor_field_title()
+        {
+        }
+        /**
+         * Returns the field's form editor description.
+         *
+         * @return string
+         */
+        public function get_form_editor_field_description()
+        {
+        }
+        /**
+         * Returns the field's form editor icon.
+         *
+         * This could be an icon url or a gform-icon class.
+         *
+         * @return string
+         */
+        public function get_form_editor_field_icon()
+        {
+        }
+        function get_form_editor_field_settings()
+        {
+        }
+        /**
+         * Generate the "select all" choice markup for the choice field.
+         *
+         * @since 2.9.0
+         *
+         * @param $value
+         * @param $tabindex
+         * @param $selected_choices_count
+         * @return string The select all choice markup.
+         */
+        public function get_choice_field_select_all_markup($value, $tabindex, $selected_choices_count)
+        {
+        }
+        /**
+         * Get the choice alignment for the given field.
+         *
+         * @since 2.9.0
+         *
+         * @param object $field The field object.
+         * @return string
+         */
+        public static function get_field_choice_alignment($field)
+        {
+        }
+        /**
+         * Get the default choice alignment for the multi_choice field.
+         *
+         * @since 2.9.0
+         *
+         * @param object $field The field object.
+         * @return string
+         */
+        public static function get_default_choice_alignment($field)
+        {
+        }
+        public function get_form_editor_inline_script_on_page_render()
+        {
+        }
+    }
+    class GF_Field_Image_Choice extends \GF_Field_Multiple_Choice
+    {
+        public $type = 'image_choice';
+        public $checkbox_choice;
+        public function __construct($data = array())
+        {
+        }
+        public function get_form_editor_field_title()
+        {
+        }
+        /**
+         * Returns the field's form editor description.
+         *
+         * @since 2.5
+         *
+         * @return string
+         */
+        public function get_form_editor_field_description()
+        {
+        }
+        /**
+         * Returns the field's form editor icon.
+         *
+         * This could be an icon url or a gform-icon class.
+         *
+         * @since 2.5
+         *
+         * @return string
+         */
+        public function get_form_editor_field_icon()
+        {
+        }
+        function get_form_editor_field_settings()
+        {
+        }
+        /*
+         * Generate the needed image sizes for the image choice field.
+         *
+         * @since 2.9.3
+         *
+         * @param array $form The form.
+         * @param bool $is_new_form Is the form new.
+         */
+        public static function resize_images($form, $is_new_form)
+        {
+        }
+        /**
+         * Trigger the resizing of images after form import.
+         *
+         * @since 2.9.3
+         *
+         * @param array $forms The forms being imported.
+         */
+        public static function resize_images_after_import($forms)
+        {
+        }
+        /**
+         * Get the choice labels visibility setting default for the image choice field.
+         *
+         * @since 2.9.0
+         *
+         * @param object $field The field object.
+         *
+         * @return string
+         */
+        public static function get_image_choice_label_visibility_setting_default($form_id)
+        {
+        }
+        /**
+         * Get the choice labels visibility setting for the given image choice field.
+         *
+         * @since 2.9.0
+         *
+         * @param object $field The field object.
+         *
+         * @return string
+         */
+        public static function get_image_choice_label_visibility_setting($field)
+        {
+        }
+        /**
+         * Get the choice inputs visibility setting for the given image choice field.
+         *
+         * @since 2.9.0
+         *
+         * @param object $field The field object.
+         *
+         * @return string
+         */
+        public static function get_image_choice_input_visibility_setting($field)
+        {
+        }
+        public function get_form_editor_inline_script_on_page_render()
+        {
+        }
+        /**
+         * Returns the image URL for a choice to display in a merge tage with the "img_url" modifier.
+         *
+         * @since 2.9.0
+         *
+         * @param string $value    The value of the merge tag.
+         * @param string $input_id The ID of the input.
+         * @param array  $entry    The entry currently being processed.
+         * @param array  $form     The form currently being processed.
+         * @param object $field    The field currently being processed.
+         *
+         * @return string|array
+         */
+        public function get_merge_tag_img_url($value, $input_id, $entry, $form, $field)
         {
         }
     }
@@ -23533,6 +25447,18 @@ namespace {
         public static function start_wp_tiny_mce_init_buffer()
         {
         }
+        /**
+         * Adds 'textarea' to the list of tags that should not be texturized.
+         *
+         * @since 2.9.1
+         *
+         * @param array $tags The list of tags that should not be texturized.
+         *
+         * @return array The updated list of tags.
+         */
+        public static function remove_textarea_texturize($tags)
+        {
+        }
         public static function end_wp_tiny_mce_init_buffer()
         {
         }
@@ -24282,6 +26208,16 @@ namespace {
          * @return array
          */
         public function get_filter_operators()
+        {
+        }
+        /**
+         * Override to return null instead of the array of inputs in case this is a choice field.
+         *
+         * @since 2.9
+         *
+         * @return array|null
+         */
+        public function get_entry_inputs()
         {
         }
     }
@@ -25546,6 +27482,8 @@ namespace {
     class GF_Field_Total extends \GF_Field
     {
         public $type = 'total';
+        public $numberFormat = 'currency';
+        // This is used to property format the total during conditional logic evaluation.
         function get_form_editor_field_settings()
         {
         }
@@ -25696,6 +27634,17 @@ namespace {
         public function get_filter_operators()
         {
         }
+        /**
+         * Performs actions after the field has been converted to an object.
+         *
+         * Ensures the `autocompleteAttribute` property is set to 'url' if it is not already defined.
+         *
+         * @since 2.9.8
+         *
+         */
+        public function post_convert_field()
+        {
+        }
     }
     class GF_Fields
     {
@@ -25740,6 +27689,68 @@ namespace {
          * @return GF_Field | bool
          */
         public static function create($properties)
+        {
+        }
+    }
+    class ChoiceDecorator
+    {
+        /**
+         * @var GF_Field
+         */
+        protected $field;
+        public function __construct($field)
+        {
+        }
+        public function __call($name, $args)
+        {
+        }
+        /**
+         * Get the style classes for the image choice field.
+         *
+         * @since 2.9
+         *
+         * @param $form_id
+         * @param $field_id
+         *
+         * @return string
+         */
+        public function get_field_classes($form_id, $field)
+        {
+        }
+        /**
+         * Get the image markup for a choice field.
+         *
+         * @since 2.9
+         *
+         * @param $choice
+         * @param $choice_id
+         * @param $choice_number
+         * @param $form
+         *
+         * @return string
+         */
+        public function get_image_markup($choice, $choice_id, $choice_number, $form)
+        {
+        }
+    }
+    class GF_Field_Decorator_Choice_Checkbox_Markup extends \ChoiceDecorator
+    {
+        public function get_field_input($form, $value = '', $entry = \null)
+        {
+        }
+        public function get_checkbox_choices($value, $disabled_text, $form, $field_id)
+        {
+        }
+    }
+    class GF_Field_Decorator_Choice_Radio_Markup extends \ChoiceDecorator
+    {
+        public function get_field_input($form, $value = '', $entry = \null)
+        {
+        }
+        public function get_radio_choices($value, $disabled_text, $form, $field_id)
+        {
+        }
+        public function get_choice_html($choice, &$choice_id, $value, $disabled_text, $is_admin, $form = \null)
         {
         }
     }
@@ -25881,6 +27892,8 @@ namespace Gravity_Forms\Gravity_Forms\Form_Display {
         const FULL_SCREEN_HANDLER = 'full_screen_handler';
         const BLOCK_STYLES_HANDLER = 'block_styles_handler';
         const BLOCK_STYLES_DEFAULTS = 'block_styles_defaults';
+        const PRODUCT_META_CONFIG = 'products_meta_config';
+        const PAGINATION_CONFIG = 'pagination_config';
         /**
          * Register services to the container.
          *
@@ -25904,6 +27917,70 @@ namespace Gravity_Forms\Gravity_Forms\Form_Display {
         {
         }
         public function register_theme_styles()
+        {
+        }
+    }
+}
+namespace Gravity_Forms\Gravity_Forms\Form_Display\Config {
+    /**
+     * Form specific product meta config.
+     *
+     * @since 2.9.0
+     */
+    class GF_Pagination_Config extends \Gravity_Forms\Gravity_Forms\Config\GF_Config
+    {
+        protected $name = 'gform_theme_config';
+        protected $script_to_localize = 'gform_gravityforms_theme';
+        /**
+         * Config data.
+         *
+         * @return array[]
+         */
+        public function data()
+        {
+        }
+        /**
+         * Enable ajax loading for the "gform_theme_config/common/form/pagination" config path.
+         *
+         * @since 2.9.0
+         *
+         * @param string $config_path The full path to the config item when stored in the browser's window object, for example: "gform_theme_config/common/form/product_meta"
+         * @param array  $args        The args used to load the config data. This will be empty for generic config items. For form specific items will be in the format: array( 'form_ids' => array(123,222) ).
+         *
+         * @return bool Return true if the provided $config_path is the product_meta path. Return false otherwise.
+         */
+        public function enable_ajax($config_path, $args)
+        {
+        }
+    }
+    /**
+     * Form specific product meta config.
+     *
+     * @since 2.9.0
+     */
+    class GF_Product_Meta_Config extends \Gravity_Forms\Gravity_Forms\Config\GF_Config
+    {
+        protected $name = 'gform_theme_config';
+        protected $script_to_localize = 'gform_gravityforms_theme';
+        /**
+         * Config data.
+         *
+         * @return array[]
+         */
+        public function data()
+        {
+        }
+        /**
+         * Enable ajax loading for the "gform_theme_config/common/form/product_meta" config path.
+         *
+         * @since 2.9.0
+         *
+         * @param string $config_path The full path to the config item when stored in the browser's window object, for example: "gform_theme_config/common/form/product_meta"
+         * @param array  $args        The args used to load the config data. This will be empty for generic config items. For form specific items will be in the format: array( 'form_ids' => array(123,222) ).
+         *
+         * @return bool Return true if the provided $config_path is the product_meta path. Return false otherwise.
+         */
+        public function enable_ajax($config_path, $args)
         {
         }
     }
@@ -26024,6 +28101,7 @@ namespace Gravity_Forms\Gravity_Forms\Form_Editor {
         // Configs
         const CHOICES_UI_CONFIG = 'embed_config';
         const CHOICES_UI_CONFIG_I18N = 'embed_config_i18n';
+        const DIALOG_CONFIG_I18N = 'dialog_config_i18n';
         const FORM_EDITOR_SAVE_CONFIG = 'form_editor_save_config';
         const FORM_EDITOR_RENDERER = 'form_editor_renderer';
         /**
@@ -26033,7 +28111,7 @@ namespace Gravity_Forms\Gravity_Forms\Form_Editor {
          *
          * @var string[]
          */
-        protected $configs = array(self::CHOICES_UI_CONFIG => \Gravity_Forms\Gravity_Forms\Form_Editor\Choices_UI\Config\GF_Choices_UI_Config::class, self::CHOICES_UI_CONFIG_I18N => \Gravity_Forms\Gravity_Forms\Form_Editor\Choices_UI\Config\GF_Choices_UI_Config_I18N::class, self::FORM_EDITOR_SAVE_CONFIG => \Gravity_Forms\Gravity_Forms\Form_Editor\Save_Form\Config\GF_Form_Editor_Form_Save_Config::class);
+        protected $configs = array(self::CHOICES_UI_CONFIG => \Gravity_Forms\Gravity_Forms\Form_Editor\Choices_UI\Config\GF_Choices_UI_Config::class, self::CHOICES_UI_CONFIG_I18N => \Gravity_Forms\Gravity_Forms\Form_Editor\Choices_UI\Config\GF_Choices_UI_Config_I18N::class, self::DIALOG_CONFIG_I18N => \Gravity_Forms\Gravity_Forms\Form_Editor\Choices_UI\Config\GF_Dialog_Config_I18N::class, self::FORM_EDITOR_SAVE_CONFIG => \Gravity_Forms\Gravity_Forms\Form_Editor\Save_Form\Config\GF_Form_Editor_Form_Save_Config::class);
         // Configs names, used as keys for the configuration classes in the service container.
         // Endpoint names, used as keys for the endpoint classes in the service container.
         // keys are the same names for the ajax actions.
@@ -26057,6 +28135,29 @@ namespace Gravity_Forms\Gravity_Forms\Form_Editor {
          * @param GF_Service_Container $container
          */
         public function init(\Gravity_Forms\Gravity_Forms\GF_Service_Container $container)
+        {
+        }
+    }
+}
+namespace Gravity_Forms\Gravity_Forms\Form_Editor\Choices_UI\Config {
+    /**
+     * I18N items for the Choices UI.
+     *
+     * @since 2.6
+     */
+    class GF_Dialog_Config_I18N extends \Gravity_Forms\Gravity_Forms\Config\GF_Config
+    {
+        protected $name = 'gform_admin_config';
+        protected $script_to_localize = 'gform_gravityforms_admin_vendors';
+        public function should_enqueue()
+        {
+        }
+        /**
+         * Config data.
+         *
+         * @return array[]
+         */
+        public function data()
         {
         }
     }
@@ -26321,6 +28422,121 @@ namespace Gravity_Forms\Gravity_Forms\Form_Editor\Save_Form\Endpoints {
         }
     }
 }
+namespace Gravity_Forms\Gravity_Forms\Form_Switcher {
+    /**
+     * Class GF_Form_Switcher_Service_Provider
+     *
+     * Service provider for the Form_Switcher Service.
+     *
+     * @package Gravity_Forms\Gravity_Forms\Form_Switcher;
+     */
+    class GF_Form_Switcher_Service_Provider extends \Gravity_Forms\Gravity_Forms\GF_Service_Provider
+    {
+        // Configs
+        const FORM_SWITCHER_CONFIG = 'form_switcher_config';
+        const ENDPOINT_GET_FORMS = 'endpoint_get_forms';
+        /**
+         * Array mapping config class names to their container ID.
+         *
+         * @since 2.9.6
+         *
+         * @var string[]
+         */
+        protected $configs = array(self::FORM_SWITCHER_CONFIG => \Gravity_Forms\Gravity_Forms\Form_Switcher\Config\GF_Form_Switcher_Config::class);
+        /**
+         * Register services to the container.
+         *
+         * @since 2.9.6
+         *
+         * @param GF_Service_Container $container
+         */
+        public function register(\Gravity_Forms\Gravity_Forms\GF_Service_Container $container)
+        {
+        }
+        /**
+         * Initialize any actions or hooks.
+         *
+         * @since 2.9.6
+         *
+         * @param GF_Service_Container $container
+         *
+         * @return void
+         */
+        public function init(\Gravity_Forms\Gravity_Forms\GF_Service_Container $container)
+        {
+        }
+    }
+}
+namespace Gravity_Forms\Gravity_Forms\Form_Switcher\Config {
+    /**
+     * Config items for Form_Switcher.
+     *
+     * @since 2.9.6
+     */
+    class GF_Form_Switcher_Config extends \Gravity_Forms\Gravity_Forms\Config\GF_Config
+    {
+        protected $name = 'gform_admin_config';
+        protected $script_to_localize = 'gform_gravityforms_admin_vendors';
+        /**
+         * Only enqueue in the admin.
+         *
+         * @since 2.9.6
+         *
+         * @return bool
+         */
+        public function should_enqueue()
+        {
+        }
+        /**
+         * Config data.
+         *
+         * @since 2.9.6
+         *
+         * @return array[]
+         */
+        public function data()
+        {
+        }
+        /**
+         * Get the endpoints for the Form Switcher.
+         *
+         * @since 2.9.6
+         *
+         * @return array
+         */
+        public function get_endpoints()
+        {
+        }
+    }
+}
+namespace Gravity_Forms\Gravity_Forms\Form_Switcher\Endpoints {
+    /**
+     * AJAX Endpoint for getting a form based on a search query.
+     *
+     * @since   2.9.6
+     *
+     * @package Gravity_Forms\Gravity_Forms\Form_Switcher\Endpoints
+     */
+    class GF_Form_Switcher_Endpoint_Get_Forms
+    {
+        // Strings
+        const ACTION_NAME = 'gf_form_switcher_get_forms';
+        // Parameters
+        const PARAM_SEARCH = 'search';
+        // Defaults
+        const DEFAULT_SEARCH = '';
+        /**
+         * Handle the AJAX request.
+         *
+         * @since 2.9.6
+         *
+         * @return void
+         */
+        public function handle()
+        {
+        }
+    }
+}
 namespace Gravity_Forms\Gravity_Forms\Honeypot {
     /**
      * Class GF_Honeypot_Handler
@@ -26348,9 +28564,10 @@ namespace Gravity_Forms\Gravity_Forms\Honeypot {
          * Target of the gform_abort_submission_with_confirmation filter. Aborts form submission early with a confirmation when honeypot fails and it is configured not to create an entry.
          *
          * @since 2.7
+         * @since 2.9.8 Updated honeypotAction default to spam.
          *
          * @param bool  $do_abort Variable being filtered. True to abort submission, false to continue.
-         * @param array $form Current form object.
+         * @param array $form     Current form object.
          *
          * @return bool Returns true to abort form submission early and display confirmation. Returns false to let submission continue.
          */
@@ -27401,6 +29618,8 @@ namespace Gravity_Forms\Gravity_Forms\License {
         const MULTISITE_NOT_ALLOWED = 'gravityapi_multisite_not_allowed';
         const NO_LICENSE_KEY = 'no_license_key';
         const NO_DATA = 'rest_no_route';
+        const REQUEST_BLOCKED = 'http_request_blocked';
+        const REQUEST_FAILED = 'http_request_failed';
         const USABILITY_VALID = 'success';
         const USABILITY_ALLOWED = 'warning';
         const USABILITY_NOT_ALLOWED = 'error';
@@ -27413,7 +29632,7 @@ namespace Gravity_Forms\Gravity_Forms\License {
          *
          * @return mixed|string|void
          */
-        public static function get_message_for_code($code)
+        public static function get_message_for_code($code, $error_message = '')
         {
         }
     }
@@ -30631,6 +32850,110 @@ namespace Gravity_Forms\Gravity_Forms\Settings {
         }
     }
     /**
+     * Class GF_Settings_Encryption
+     *
+     * @since 2.7.17
+     *
+     * Provides functionality for handling the encryption and decryption of settings
+     */
+    class GF_Settings_Encryption
+    {
+        /**
+         * Constructor.
+         *
+         * @since 2.7.17
+         *
+         * @param string $encryption_key Encryption key to use for encrypting / decrypting settings. Defaults to GF_ENCRYPTION_KEY constant.
+         *
+         * @return void
+         */
+        function __construct($encryption_key = '')
+        {
+        }
+        /**
+         * Determines if settings encryption is enabled.
+         *
+         * @since 2.7.17
+         *
+         * @return bool True if settings encryption is enabled. False otherwise.
+         *
+         */
+        public function is_enabled()
+        {
+        }
+        /**
+         * Returns the value of the GF_ENCRYPTION_KEY constant for the settings page.
+         *
+         * @since 2.7.17
+         *
+         * @return string The value of the GF_ENCRYPTION_KEY constant.
+         */
+        public function get_key()
+        {
+        }
+        /**
+         * Will encrypt a settings array given it has encryption enabled, is not an empty array, and is not currently encrypted.
+         *
+         * @since 2.7.17
+         *
+         * @param array $settings An array of settings values
+         *
+         * @return false|mixed|string Will return a json block containing the encrypted setting values, otherwise returns original setting values.
+         */
+        public function encrypt($settings)
+        {
+        }
+        /**
+         * Will decrypt settings given it has encryption enabled and is currently encrypted.
+         *
+         * @since 2.7.17
+         *
+         * @param $settings
+         *
+         * @return mixed Will return the decrypted settings values, otherwise returns original settings values.
+         */
+        public function decrypt($settings)
+        {
+        }
+        /**
+         * For encrypted settings, returns the decoded JSON wrapper.
+         *
+         * @since 2.7.17
+         *
+         * @param string $setting a settings value
+         *
+         * @return bool  returns the decoded JSON wrapper for encrypted settings, otherwise returns the original settings.
+         */
+        public function get_wrapper($setting)
+        {
+        }
+        /**
+         * When encryption is enabled, will decrypt all fields that are encrypted and return the resulting array.
+         *
+         * @since 2.7.17
+         *
+         * @param $meta array The feed meta array.
+         *
+         * @return array Returns the feed meta array with all fields decrypted.
+         */
+        public function decrypt_feed_meta($meta)
+        {
+        }
+        /**
+         * When encryption is enabled, will encrypt all fields marked for encryption and return the resulting array.
+         *
+         * @since 2.7.17
+         *
+         * @param $meta array The feed meta array.
+         * @param $fields_to_encrypt array The array of field names to encrypt.
+         *
+         * @return array Returns the feed meta array with all fields marked for encryption encrypted.
+         */
+        public function encrypt_feed_meta($meta, $fields_to_encrypt = array())
+        {
+        }
+    }
+    /**
      * Class GF_Settings_Service_Provider
      *
      * Service provider for the Settings Service.
@@ -30639,9 +32962,12 @@ namespace Gravity_Forms\Gravity_Forms\Settings {
      */
     class GF_Settings_Service_Provider extends \Gravity_Forms\Gravity_Forms\GF_Service_Provider
     {
+        const SETTINGS = 'settings';
         // Configs
         const SETTINGS_CONFIG_I18N = 'settings_config_i18n';
         const SETTINGS_CONFIG_ADMIN = 'settings_config_admin';
+        // Encryption utils
+        const SETTINGS_ENCRYPTION = 'settings_encryption';
         /**
          * Array mapping config class names to their container ID.
          *
@@ -30658,6 +32984,18 @@ namespace Gravity_Forms\Gravity_Forms\Settings {
          * @param GF_Service_Container $container
          */
         public function register(\Gravity_Forms\Gravity_Forms\GF_Service_Container $container)
+        {
+        }
+        /**
+         * Initialize any actions or hooks.
+         *
+         * @since 2.9.5
+         *
+         * @param GF_Service_Container $container
+         *
+         * @return void
+         */
+        public function init(\Gravity_Forms\Gravity_Forms\GF_Service_Container $container)
         {
         }
     }
@@ -31283,11 +33621,26 @@ namespace Gravity_Forms\Gravity_Forms\Settings {
         public static function is_save_postback()
         {
         }
+        /**
+         * Remove the "has published posts" query from the REST user query.
+         *
+         * This will make sure that the User Select field can find all users, not just users with published posts.
+         *
+         * @since 2.9.5
+         *
+         * @param $prepared_args
+         * @param $request
+         *
+         * @return mixed
+         */
+        public function remove_has_published_posts_from_api_user_query($prepared_args, $request)
+        {
+        }
     }
 }
 namespace Gravity_Forms\Gravity_Forms\Settings\Config {
     /**
-     * Config items for the Settings I18N
+     * Config items for the Settings Fields
      *
      * @since 2.6.2
      */
@@ -31326,6 +33679,16 @@ namespace Gravity_Forms\Gravity_Forms\Settings\Config {
          * @return array|false
          */
         public function get_first_posts_for_type($post_type, $count)
+        {
+        }
+        /**
+         * Get the first users to populate the dropdown.
+         *
+         * @since 2.9.5
+         *
+         * @return array|false
+         */
+        public function get_first_users()
         {
         }
     }
@@ -31453,6 +33816,13 @@ namespace Gravity_Forms\Gravity_Forms\Settings\Fields {
          * @var Settings
          */
         public $settings;
+        /** Used to check if encryption is suppported.
+         *
+         * @since 2.7.15.2
+         *
+         * @var bool
+         */
+        public $encrypt;
         /**
          * Field id.
          *
@@ -32396,20 +34766,10 @@ namespace Gravity_Forms\Gravity_Forms\Settings\Fields {
          *
          * @since 2.5
          *
-         * @param array                                $props    Field properties.
-         * @param \Gravity_Forms\Gravity_Forms\Settings\Settings $settings Settings instance.
+         * @param array                                          $props    Field properties.
+         * @param \Gravity_Forms\Gravity_Forms\Settings\Settings $settings Settings framework instance.
          */
         public function __construct($props, $settings)
-        {
-        }
-        /**
-         * Register scripts to enqueue when displaying field.
-         *
-         * @since 2.5
-         *
-         * @return array
-         */
-        public function scripts()
         {
         }
         // # RENDER METHODS ------------------------------------------------------------------------------------------------
@@ -33112,6 +35472,38 @@ namespace Gravity_Forms\Gravity_Forms\Settings\Fields {
          * @return string
          */
         public function markup()
+        {
+        }
+    }
+    class User_Select extends \Gravity_Forms\Gravity_Forms\Settings\Fields\Select
+    {
+        /**
+         * Field type.
+         *
+         * @since 2.9.5
+         *
+         * @var string
+         */
+        public $type = 'user_select';
+        // # RENDER METHODS ------------------------------------------------------------------------------------------------
+        /**
+         * Render field.
+         *
+         * @since 2.9.5
+         *
+         * @return string
+         */
+        public function markup()
+        {
+        }
+        /**
+         * Get the label for the dropdown.
+         *
+         * @since 2.9.5
+         *
+         * @return string
+         */
+        public function get_dropdown_label()
         {
         }
     }
@@ -34062,6 +36454,18 @@ namespace {
         public static function available_updates()
         {
         }
+        /**
+         * Generates the markup for displaying the status messages. 
+         * 
+         * @since: 2.9
+         *
+         * @param array $messages An array of status messages.
+         * 
+         * @return string The html markup for the status messages.
+         */
+        public static function get_markup_for_status_messages($messages)
+        {
+        }
     }
 }
 namespace Gravity_Forms\Gravity_Forms\Telemetry {
@@ -34151,7 +36555,7 @@ namespace Gravity_Forms\Gravity_Forms\Telemetry {
     /**
      * GF_Telemetry_Processor Class.
      */
-    class GF_Telemetry_Processor extends \GF_Background_Process
+    class GF_Telemetry_Processor extends \Gravity_Forms\Gravity_Forms\Async\GF_Background_Process
     {
         /**
          * @var string
@@ -35675,6 +38079,18 @@ namespace Gravity_Forms\Gravity_Forms\Theme_Layers\Framework\Engines\Output_Engi
         {
         }
         /**
+         * Adds a style handle to the list of no conflict styles.
+         *
+         * @since 2.9.0
+         *
+         * @param string $handle Style to be added to the no conflict list.
+         *
+         * @return void
+         */
+        public function add_no_conflict_style($handle)
+        {
+        }
+        /**
          * Setter for scripts.
          *
          * @since 2.7
@@ -35694,6 +38110,56 @@ namespace Gravity_Forms\Gravity_Forms\Theme_Layers\Framework\Engines\Output_Engi
         public function output()
         {
         }
+        /**
+         * Enqueues the scripts and styles for a form in the appropriate order and group.
+         *
+         * @since 2.9.0
+         *
+         * @param array $form           The form to enqueue scripts and styles for.
+         * @param bool  $ajax           Whether the form is being loaded via AJAX.
+         * @param array $settings       The settings for the form.
+         * @param array $style_settings The custom styles defined when embedding a form via the block editor or via the shortcode.
+         */
+        protected function enqueue_form_assets($form, $ajax, $settings, $style_settings)
+        {
+        }
+        /**
+         * Enqueue the styles for a form in the appropriate order and group.
+         *
+         * @since 2.9.0
+         *
+         * @param array $form     The form to enqueue styles for. Optional. Some pages such as the block editor page won't have a form context.
+         * @param array $settings The settings for the form.
+         */
+        protected function enqueue_form_styles($form = array(), $settings = array())
+        {
+        }
+        /**
+         * Sorts enqueued styles by group. See {@see Asset_Enqueue_Output_Engine::sort_enqueues_by_group()} for more information.
+         *
+         * @since 2.9.0
+         */
+        public function sort_enqueued_styles()
+        {
+        }
+        /**
+         * Sorts enqueued styles by group. Core styles are always first within their respective groups.
+         * Groups are "reset", "foundation", "framework", and "theme". Groups are sorted in that order, and within each group, core styles are always first followed by other styles.
+         * For example, if an add-on has a style in the "foundation" and "framework" groups, styles will be sorted in the following order:
+         * 1. Core reset style
+         * 2. Core foundation style
+         * 3. Add-on foundation style
+         * 4. Core framework style
+         * 5. Add-on framework style
+         * 6. Core theme style
+         *
+         * @since 2.7.4
+         *
+         * @param string $a Style handle.
+         * @param string $b Style handle.
+         *
+         * @return int
+         */
         public function sort_enqueues_by_group($a, $b)
         {
         }
@@ -35702,8 +38168,8 @@ namespace Gravity_Forms\Gravity_Forms\Theme_Layers\Framework\Engines\Output_Engi
          *
          * @since 2.7.4
          *
-         * @param array $styles  Styles to enqueue
-         * @param array $scripts Scripts to enqueue
+         * @param array $styles  Styles to enqueue.
+         * @param array $scripts Scripts to enqueue.
          */
         public function process_form_assets($styles, $scripts)
         {
@@ -40061,7 +42527,7 @@ namespace {
          *
          * @since  Unknown
          * @access public
-         *
+         * @remove-in 3.0
          * @uses GFSettings::$addon_pages
          *
          * @param string|array $name      The settings page slug.
@@ -40496,8 +42962,10 @@ namespace {
     /**
      * Helper function for getting values from query strings or arrays
      *
-     * @param string $name The key
-     * @param array $array The array to search through.  If null, checks query strings.  Defaults to null.
+     * @since 2.9.1 Updated to use GFForms::get().
+     *
+     * @param string $name  The key
+     * @param array  $array The array to search through.  If null, checks query strings.  Defaults to null.
      *
      * @return string The value.  If none found, empty string.
      */
@@ -40507,8 +42975,10 @@ namespace {
     /**
      * Helper function to obtain POST values.
      *
-     * @param string $name The key
-     * @param bool $do_stripslashes Optional. Performs stripslashes_deep.  Defaults to true.
+     * @since 2.9.1 Updated to use GFForms::post().
+     *
+     * @param string $name            The key
+     * @param bool   $do_stripslashes Optional. Performs stripslashes_deep.  Defaults to true.
      *
      * @return string The value.  If none found, empty string.
      */
